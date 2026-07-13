@@ -64,7 +64,8 @@
         
         /* Hide scrollbar for a cleaner look but allow scrolling */
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 6px;
+            height: 6px;
         }
         ::-webkit-scrollbar-track {
             background: #111; 
@@ -75,6 +76,15 @@
         }
         ::-webkit-scrollbar-thumb:hover {
             background: #f5c518; 
+        }
+
+        /* Mobile swiping hide scrollbar utility */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
     </style>
 </head>
@@ -231,21 +241,21 @@
                 return (
                     <div className="min-h-screen flex items-center justify-center bg-black p-4 relative overflow-hidden">
                         <div className="absolute inset-0 bg-gradient-to-br from-fire-900/30 to-black z-0"></div>
-                        <div className="text-center z-10 card-glass p-8 md:p-16 rounded-3xl max-w-2xl border-fire-500/30 border shadow-[0_0_50px_rgba(255,78,0,0.1)]">
-                            <i className="fa-solid fa-fire text-6xl text-fire-500 mb-6 animate-pulse"></i>
-                            <h1 className="font-display text-4xl md:text-6xl font-black mb-4 uppercase text-white drop-shadow-lg">
+                        <div className="text-center z-10 card-glass p-6 sm:p-8 md:p-16 rounded-3xl max-w-2xl border-fire-500/30 border shadow-[0_0_50px_rgba(255,78,0,0.1)] w-full mx-4">
+                            <i className="fa-solid fa-fire text-5xl md:text-6xl text-fire-500 mb-4 md:mb-6 animate-pulse"></i>
+                            <h1 className="font-display text-3xl sm:text-4xl md:text-6xl font-black mb-3 md:mb-4 uppercase text-white drop-shadow-lg leading-tight">
                                 Ready to Dominate?
                             </h1>
-                            <p className="text-gray-400 text-lg mb-10 uppercase tracking-widest font-semibold">
+                            <p className="text-gray-400 text-sm sm:text-lg mb-8 md:mb-10 uppercase tracking-widest font-semibold">
                                 The Rise Up 90 Challenge Starts Now.
                             </p>
                             <button 
                                 onClick={handleEnter}
-                                className="bg-gradient-to-r from-fire-600 to-fire-500 hover:from-fire-500 hover:to-gold-500 text-white font-display font-black text-xl md:text-2xl py-4 px-12 rounded-full shadow-[0_0_30px_rgba(255,78,0,0.5)] hover:shadow-[0_0_40px_rgba(255,215,0,0.6)] transform hover:scale-105 transition-all uppercase tracking-wider"
+                                className="bg-gradient-to-r from-fire-600 to-fire-500 hover:from-fire-500 hover:to-gold-500 text-white font-display font-black text-lg sm:text-xl md:text-2xl py-3 px-8 md:py-4 md:px-12 rounded-full shadow-[0_0_30px_rgba(255,78,0,0.5)] hover:shadow-[0_0_40px_rgba(255,215,0,0.6)] transform hover:scale-105 transition-all uppercase tracking-wider w-full sm:w-auto"
                             >
                                 Let's Go <i className="fa-solid fa-arrow-right ml-2"></i>
                             </button>
-                            <p className="text-xs text-gray-600 mt-8 font-bold tracking-widest uppercase">
+                            <p className="text-[10px] sm:text-xs text-gray-600 mt-6 md:mt-8 font-bold tracking-widest uppercase">
                                 <i className="fa-solid fa-volume-high mr-1"></i> Audio enabled experience
                             </p>
                         </div>
@@ -262,56 +272,56 @@
                     {/* Floating Audio Control */}
                     <button 
                         onClick={toggleMute}
-                        className="fixed top-4 right-4 md:top-8 md:right-8 z-50 card-glass p-3 rounded-full text-white hover:text-fire-500 border border-gray-700 transition-colors shadow-lg"
+                        className="fixed top-3 right-3 md:top-8 md:right-8 z-50 card-glass p-2 md:p-3 rounded-full text-white hover:text-fire-500 border border-gray-700 transition-colors shadow-lg backdrop-blur-md"
                         title="Toggle Music"
                     >
-                        {isMuted ? <i className="fa-solid fa-volume-xmark text-xl w-6 text-center text-gray-500"></i> : <i className="fa-solid fa-volume-high text-xl w-6 text-center text-fire-500"></i>}
+                        {isMuted ? <i className="fa-solid fa-volume-xmark text-lg md:text-xl w-5 md:w-6 text-center text-gray-500"></i> : <i className="fa-solid fa-volume-high text-lg md:text-xl w-5 md:w-6 text-center text-fire-500"></i>}
                     </button>
 
                     {/* Header / Motivation */}
-                    <div className="text-center mb-10 mt-12 md:mt-0">
-                        <h1 className="font-display text-5xl md:text-7xl font-black mb-2 tracking-tight uppercase text-gradient">
+                    <div className="text-center mb-8 md:mb-10 mt-16 md:mt-0 px-2">
+                        <h1 className="font-display text-4xl sm:text-5xl md:text-7xl font-black mb-2 tracking-tight uppercase text-gradient leading-tight">
                             Rise Up 90 Challenge
                         </h1>
-                        <p className="text-gray-400 text-lg md:text-xl font-semibold tracking-widest uppercase">
+                        <p className="text-gray-400 text-xs sm:text-sm md:text-xl font-semibold tracking-widest uppercase">
                             Hustle until your haters ask if you're hiring.
                         </p>
                     </div>
 
-                    {}
-                    <div className="flex justify-center gap-2 md:gap-6 mb-12">
+                    {/* Timer Countdown */}
+                    <div className="flex justify-center gap-2 sm:gap-4 md:gap-6 mb-10 md:mb-12">
                         {[
                             { label: 'Days', value: timeLeft.days },
                             { label: 'Hours', value: timeLeft.hours },
                             { label: 'Mins', value: timeLeft.minutes },
                             { label: 'Secs', value: timeLeft.seconds }
                         ].map((time, idx) => (
-                            <div key={idx} className="card-glass rounded-xl p-4 md:p-6 w-20 md:w-32 flex flex-col items-center justify-center border-t-2 border-t-fire-500">
-                                <span className="font-display text-3xl md:text-5xl font-bold text-white mb-1">
+                            <div key={idx} className="card-glass rounded-xl p-2 sm:p-4 md:p-6 w-16 sm:w-20 md:w-32 flex flex-col items-center justify-center border-t-2 border-t-fire-500">
+                                <span className="font-display text-2xl sm:text-3xl md:text-5xl font-bold text-white mb-1">
                                     {time.value.toString().padStart(2, '0')}
                                 </span>
-                                <span className="text-xs md:text-sm text-gray-400 uppercase font-bold tracking-wider">{time.label}</span>
+                                <span className="text-[9px] sm:text-xs md:text-sm text-gray-400 uppercase font-bold tracking-wider">{time.label}</span>
                             </div>
                         ))}
                     </div>
 
-                    <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8">
                         
-                        {}
+                        {/* Left Column: Input Data */}
                         <div className="lg:col-span-5 flex flex-col gap-6">
                             
                             {/* Commission Display (Psychological Boost) */}
                             <div className="card-glass rounded-2xl p-6 relative overflow-hidden group">
                                 <div className="absolute inset-0 bg-gradient-to-r from-green-900/40 to-emerald-900/20 opacity-50"></div>
                                 <div className="relative z-10 text-center">
-                                    <h2 className="text-gray-400 uppercase tracking-widest text-sm font-bold mb-2">
+                                    <h2 className="text-gray-400 uppercase tracking-widest text-xs sm:text-sm font-bold mb-2">
                                         <i className="fa-solid fa-money-bill-wave text-green-400 mr-2"></i> Your 19% Commission
                                     </h2>
-                                    <div className="font-display text-5xl md:text-6xl font-black text-green-400 break-words drop-shadow-[0_0_15px_rgba(74,222,128,0.5)]">
+                                    <div className="font-display text-4xl sm:text-5xl md:text-6xl font-black text-green-400 break-words drop-shadow-[0_0_15px_rgba(74,222,128,0.5)]">
                                         {formatINR(commission)}
                                     </div>
                                     {commission > 0 && (
-                                        <div className="mt-2 text-green-300 text-sm font-bold animate-pulse">
+                                        <div className="mt-2 text-green-300 text-xs sm:text-sm font-bold animate-pulse">
                                             Keep going! Pure Profit.
                                         </div>
                                     )}
@@ -354,10 +364,10 @@
                                         className="w-full bg-black border border-gray-700 rounded-lg text-2xl font-display font-bold text-white p-4 focus:outline-none focus:border-fire-500 transition mb-3"
                                     />
                                     <div className="flex flex-wrap gap-2">
-                                        <button onClick={() => addRevenue(1000000)} className="text-xs bg-gray-800 hover:bg-gray-700 px-3 py-1 rounded text-gray-300 transition">+1 Lakh</button>
-                                        <button onClick={() => addRevenue(5000000)} className="text-xs bg-gray-800 hover:bg-gray-700 px-3 py-1 rounded text-gray-300 transition">+5 Lakhs</button>
-                                        <button onClick={() => addRevenue(10000000)} className="text-xs bg-gray-800 hover:bg-gray-700 px-3 py-1 rounded text-gold-400 transition">+10 Lakhs</button>
-                                        <button onClick={() => setRevenueInput("")} className="text-xs bg-red-900/50 hover:bg-red-900 px-3 py-1 rounded text-red-300 transition ml-auto">Reset</button>
+                                        <button onClick={() => addRevenue(1000000)} className="text-xs bg-gray-800 hover:bg-gray-700 px-2 sm:px-3 py-1.5 rounded text-gray-300 transition flex-1 text-center whitespace-nowrap">+1 Lakh</button>
+                                        <button onClick={() => addRevenue(5000000)} className="text-xs bg-gray-800 hover:bg-gray-700 px-2 sm:px-3 py-1.5 rounded text-gray-300 transition flex-1 text-center whitespace-nowrap">+5 Lakhs</button>
+                                        <button onClick={() => addRevenue(10000000)} className="text-xs bg-gray-800 hover:bg-gray-700 px-2 sm:px-3 py-1.5 rounded text-gold-400 transition flex-1 text-center whitespace-nowrap">+10 Lakhs</button>
+                                        <button onClick={() => setRevenueInput("")} className="text-xs bg-red-900/50 hover:bg-red-900 px-2 sm:px-3 py-1.5 rounded text-red-300 transition">Reset</button>
                                     </div>
                                     <div className="mt-3 text-right text-sm text-gray-400 font-medium">
                                         Value: <span className="text-white">{formatINR(revenue)}</span>
@@ -450,18 +460,18 @@
 
                     {}
                     <div className="max-w-7xl mx-auto mt-8">
-                        <div className="card-glass rounded-2xl p-6">
-                            <h3 className="font-display text-2xl font-bold mb-6 text-white uppercase border-b border-gray-800 pb-2">
+                        <div className="card-glass rounded-2xl p-4 sm:p-6">
+                            <h3 className="font-display text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-white uppercase border-b border-gray-800 pb-2">
                                 <i className="fa-solid fa-map-location-dot text-fire-500 mr-2"></i> Project Cheat Sheet
                             </h3>
                             
-                            {}
-                            <div className="flex flex-wrap gap-2 mb-6">
+                            {/* Filter Tabs - Swipeable on mobile */}
+                            <div className="flex overflow-x-auto hide-scrollbar gap-2 mb-6 pb-2 -mx-2 px-2 sm:mx-0 sm:px-0">
                                 {FILTER_TABS.map(tab => (
                                     <button 
                                         key={tab.value}
                                         onClick={() => setActiveFilter(tab.value)}
-                                        className={`px-4 py-2 rounded-full text-xs font-bold uppercase transition-all ${
+                                        className={`px-4 py-2 rounded-full text-[10px] sm:text-xs font-bold uppercase transition-all whitespace-nowrap flex-shrink-0 ${
                                             activeFilter === tab.value
                                             ? 'bg-fire-600 text-white shadow-[0_0_10px_rgba(227,60,0,0.5)]' 
                                             : 'bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white'
@@ -472,24 +482,26 @@
                                 ))}
                             </div>
 
-                            {}
+                            {/* Projects Data Display */}
                             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
                                 {filteredProjects.map(proj => (
-                                    <div key={proj.id} className="bg-black/60 border border-gray-800 rounded-xl p-4 hover:border-gray-500 transition group relative overflow-hidden">
-                                        <div className="absolute top-0 right-0 bg-gray-800 text-[10px] font-bold px-2 py-1 rounded-bl-lg text-gray-300 uppercase">
-                                            {proj.category}
-                                        </div>
-                                        <h4 className="font-display font-bold text-lg text-white mb-1 pr-12">{proj.name}</h4>
-                                        <p className="text-gray-400 text-sm mb-3"><i className="fa-solid fa-location-dot text-red-500 mr-1"></i> {proj.location}</p>
-                                        
-                                        <div className="flex justify-between items-end">
-                                            <div>
-                                                <div className="text-xs text-gray-500 uppercase">Starting at</div>
-                                                <div className="font-bold text-gold-400 text-xl">{proj.price} <span className="text-xs font-normal text-gray-400">{proj.sizes.includes('Gunta') ? '' : '/ sq.yd'}</span></div>
+                                    <div key={proj.id} className="bg-black/60 border border-gray-800 rounded-xl p-4 hover:border-gray-500 transition group relative overflow-hidden flex flex-col justify-between">
+                                        <div>
+                                            <div className="absolute top-0 right-0 bg-gray-800 text-[9px] sm:text-[10px] font-bold px-2 py-1 rounded-bl-lg text-gray-300 uppercase">
+                                                {proj.category}
                                             </div>
-                                            <div className="flex gap-1 flex-wrap justify-end max-w-[50%]">
+                                            <h4 className="font-display font-bold text-base sm:text-lg text-white mb-1 pr-12 leading-tight">{proj.name}</h4>
+                                            <p className="text-gray-400 text-xs sm:text-sm mb-3"><i className="fa-solid fa-location-dot text-red-500 mr-1"></i> {proj.location}</p>
+                                        </div>
+                                        
+                                        <div className="flex flex-col sm:flex-row justify-between sm:items-end gap-3 sm:gap-0 mt-auto">
+                                            <div>
+                                                <div className="text-[10px] sm:text-xs text-gray-500 uppercase">Starting at</div>
+                                                <div className="font-bold text-gold-400 text-lg sm:text-xl leading-none">{proj.price} <span className="text-[10px] sm:text-xs font-normal text-gray-400">{proj.sizes && proj.sizes.includes('Gunta') ? '' : '/ sq.yd'}</span></div>
+                                            </div>
+                                            <div className="flex gap-1.5 flex-wrap justify-start sm:justify-end">
                                                 {proj.tags.map((tag, i) => (
-                                                    <span key={i} className="bg-gray-800 text-gray-300 text-[10px] px-2 py-1 rounded whitespace-nowrap">{tag}</span>
+                                                    <span key={i} className="bg-gray-800 text-gray-300 text-[9px] sm:text-[10px] px-2 py-1 rounded whitespace-nowrap">{tag}</span>
                                                 ))}
                                             </div>
                                         </div>
