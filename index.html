@@ -32,14 +32,12 @@
                         'glow-pulse': 'glowPulse 2s ease-in-out infinite',
                         'fire-rise': 'fireRise 2s ease-out infinite',
                         'shimmer': 'shimmer 4s linear infinite',
-                        'ticker': 'tickerScroll 20s linear infinite',
                     },
                     keyframes: {
                         float: { '0%,100%': { transform: 'translateY(0px)' }, '50%': { transform: 'translateY(-16px)' } },
                         glowPulse: { '0%,100%': { boxShadow: '0 0 20px rgba(255,78,0,0.15)' }, '50%': { boxShadow: '0 0 50px rgba(255,78,0,0.4)' } },
                         fireRise: { '0%': { transform: 'scale(0.6) translateY(20px)', opacity: '0' }, '50%': { opacity: '1' }, '100%': { transform: 'scale(1.4) translateY(-50px)', opacity: '0' } },
                         shimmer: { '0%': { backgroundPosition: '-200% center' }, '100%': { backgroundPosition: '200% center' } },
-                        tickerScroll: { '0%': { transform: 'translateX(0)' }, '100%': { transform: 'translateX(-100%)' } },
                     }
                 }
             }
@@ -56,15 +54,17 @@
         body {
             min-height: 100vh;
             overflow-x: hidden;
-        }
-        body {
             background: #050505;
             color: #fff;
-            background-image: radial-gradient(ellipse at 50% 0%, #1f0a00 0%, #050505 70%);
-            background-attachment: fixed;
             font-family: 'Inter', sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
+        body {
+            background-image: radial-gradient(ellipse at 50% 0%, #1f0a00 0%, #050505 70%);
+            background-attachment: fixed;
+        }
+
+        /* Scrollbar */
         ::-webkit-scrollbar {
             width: 3px;
             height: 3px;
@@ -84,6 +84,7 @@
             scrollbar-width: none;
         }
 
+        /* Text gradient */
         .text-gradient {
             background: linear-gradient(135deg, #ff4e00, #f5c518, #ff4e00);
             background-size: 200% 200%;
@@ -93,20 +94,20 @@
             animation: shimmer 4s linear infinite;
         }
 
+        /* Glass cards */
         .card-glass {
-            background: rgba(12, 12, 12, 0.78);
+            background: rgba(12, 12, 12, 0.82);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 78, 0, 0.12);
+            border: 1px solid rgba(255, 78, 0, 0.10);
             box-shadow: 0 6px 30px rgba(0, 0, 0, 0.5);
             transition: border-color 0.3s, box-shadow 0.3s;
         }
         .card-glass:hover {
-            border-color: rgba(255, 78, 0, 0.3);
-            box-shadow: 0 6px 40px rgba(255, 78, 0, 0.06);
+            border-color: rgba(255, 78, 0, 0.25);
         }
 
-        /* ——— Fire Particles ——— */
+        /* Fire particles */
         #fire-particles {
             position: fixed;
             inset: 0;
@@ -129,50 +130,50 @@
             }
         }
 
-        /* ——— Floating Emojis ——— */
+        /* Floating emojis */
         .float-emoji {
             position: fixed;
             pointer-events: none;
             z-index: 0;
             animation: float 7s ease-in-out infinite;
             user-select: none;
-            opacity: 0.10;
-            font-size: 1.6rem;
+            opacity: 0.08;
+            font-size: 1.4rem;
         }
         @media (max-width: 480px) {
             .float-emoji {
-                font-size: 1rem;
-                opacity: 0.06;
+                font-size: 0.9rem;
+                opacity: 0.05;
             }
         }
         @media (min-width: 768px) {
             .float-emoji {
-                font-size: 2.4rem;
-                opacity: 0.12;
+                font-size: 2.2rem;
+                opacity: 0.10;
             }
         }
 
-        /* ——— Glow Rings ——— */
+        /* Glow rings */
         .glow-ring {
             position: fixed;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(255, 78, 0, 0.06) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(255, 78, 0, 0.05) 0%, transparent 70%);
             pointer-events: none;
             z-index: 0;
         }
 
-        /* ——— Timer Digits ——— */
+        /* Timer digits */
         .timer-digit {
             font-family: 'Oswald', sans-serif;
-            text-shadow: 0 0 30px rgba(255, 78, 0, 0.25);
+            text-shadow: 0 0 30px rgba(255, 78, 0, 0.20);
         }
 
-        /* ——— Commission Pulse ——— */
+        /* Commission pulse */
         .commission-pulse {
             animation: glowPulse 2.5s ease-in-out infinite;
         }
 
-        /* ——— Card Enter Animation ——— */
+        /* Card enter animation */
         .card-enter {
             animation: cardFadeUp 0.5s ease-out forwards;
             opacity: 0;
@@ -180,7 +181,7 @@
         @keyframes cardFadeUp {
             0% {
                 opacity: 0;
-                transform: translateY(24px);
+                transform: translateY(20px);
             }
             100% {
                 opacity: 1;
@@ -206,7 +207,7 @@
             animation-delay: 0.24s;
         }
 
-        /* ——— Entrance Overlay ——— */
+        /* Entrance overlay */
         #entrance-overlay {
             position: fixed;
             inset: 0;
@@ -224,7 +225,7 @@
             pointer-events: none;
         }
 
-        /* ——— Mobile touch optimizations ——— */
+        /* Touch optimizations */
         .touch-manipulation {
             touch-action: manipulation;
         }
@@ -238,7 +239,7 @@
             transform: scale(0.96);
         }
 
-        /* ——— Project card text truncation ——— */
+        /* Project card */
         .project-name {
             display: -webkit-box;
             -webkit-line-clamp: 2;
@@ -246,7 +247,7 @@
             overflow: hidden;
         }
 
-        /* ——— Confetti burst (simple) ——— */
+        /* Confetti */
         .confetti-piece {
             position: fixed;
             width: 8px;
@@ -267,9 +268,42 @@
             }
         }
 
-        /* ——— Autoplay audio hint ——— */
+        /* Audio hint pulse */
         .audio-hint {
             animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* Audio status indicator */
+        .audio-status {
+            transition: all 0.3s ease;
+        }
+
+        /* Fix for number input spinners on mobile */
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        /* Better touch targets on mobile */
+        @media (max-width: 480px) {
+            button,
+            .clickable {
+                min-height: 44px;
+                min-width: 44px;
+            }
+            .timer-digit {
+                font-size: 1.5rem !important;
+            }
+        }
+
+        /* Ensure no horizontal scroll */
+        .no-scroll-x {
+            overflow-x: hidden;
+            max-width: 100vw;
         }
     </style>
 </head>
@@ -278,7 +312,7 @@
     <!-- ====== FIRE PARTICLES ====== -->
     <div id="fire-particles"></div>
 
-    <!-- ====== FLOATING EMOJIS (reduced on mobile via CSS) ====== -->
+    <!-- ====== FLOATING EMOJIS ====== -->
     <div class="float-emoji" style="top:6%;left:4%;animation-delay:0s;">🔥</div>
     <div class="float-emoji" style="top:12%;right:6%;animation-delay:1.2s;">⚡</div>
     <div class="float-emoji" style="bottom:18%;left:5%;animation-delay:2.8s;">🚀</div>
@@ -351,11 +385,11 @@
         ];
 
         const FILTER_TABS = [
-            { label: "All Projects", value: "All" },
-            { label: "Shadnagar (South)", value: "Shadnagar" },
-            { label: "Mumbai Hwy (West)", value: "Mumbai" },
-            { label: "Warangal Hwy (East)", value: "Warangal" },
-            { label: "Vijayawada Hwy (SE)", value: "Vijayawada" },
+            { label: "All", value: "All" },
+            { label: "Shadnagar", value: "Shadnagar" },
+            { label: "Mumbai Hwy", value: "Mumbai" },
+            { label: "Warangal Hwy", value: "Warangal" },
+            { label: "Vijayawada", value: "Vijayawada" },
         ];
 
         const MOTIVATIONAL_QUOTES = [
@@ -374,19 +408,19 @@
 
         // ——— Confetti burst ———
         function fireConfetti(count = 30) {
-            const colors = ['#ff4e00', '#f5c518', '#ff6b35', '#ffd700', '#ff2d2d', '#ff9f1c'];
+            const colors = ['#ff4e00', '#f5c518', '#ff6b35', '#ffd700', '#ff2d2d', '#ff9f1c', '#00ff88', '#ff00ff'];
             const container = document.body;
             for (let i = 0; i < count; i++) {
                 const el = document.createElement('div');
                 el.className = 'confetti-piece';
-                el.style.left = (20 + Math.random() * 60) + '%';
-                el.style.top = (20 + Math.random() * 30) + '%';
+                el.style.left = (10 + Math.random() * 80) + '%';
+                el.style.top = (10 + Math.random() * 40) + '%';
                 el.style.background = colors[Math.floor(Math.random() * colors.length)];
-                el.style.width = (4 + Math.random() * 6) + 'px';
-                el.style.height = (4 + Math.random() * 6) + 'px';
+                el.style.width = (4 + Math.random() * 8) + 'px';
+                el.style.height = (4 + Math.random() * 8) + 'px';
                 el.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
-                el.style.animationDuration = (1.2 + Math.random() * 1.2) + 's';
-                el.style.animationDelay = (Math.random() * 0.6) + 's';
+                el.style.animationDuration = (1.0 + Math.random() * 1.4) + 's';
+                el.style.animationDelay = (Math.random() * 0.8) + 's';
                 el.style.transform = `rotate(${Math.random() * 360}deg)`;
                 container.appendChild(el);
                 setTimeout(() => el.remove(), 3000);
@@ -397,6 +431,9 @@
         const App = () => {
             const [entered, setEntered] = useState(false);
             const [isMuted, setIsMuted] = useState(false);
+            const [audioLoaded, setAudioLoaded] = useState(false);
+            const [audioError, setAudioError] = useState(false);
+            const [audioPlaying, setAudioPlaying] = useState(false);
             const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
             const [allotments, setAllotments] = useState(0);
             const [revenueInput, setRevenueInput] = useState("");
@@ -462,33 +499,74 @@
             useEffect(() => {
                 if (currentTier && currentTier.id !== prevTierId) {
                     setPrevTierId(currentTier.id);
-                    fireConfetti(35);
+                    fireConfetti(40);
                 }
             }, [currentTier]);
+
+            // ——— Audio event listeners ———
+            useEffect(() => {
+                const audio = audioRef.current;
+                if (!audio) return;
+
+                const handleLoaded = () => {
+                    setAudioLoaded(true);
+                    setAudioError(false);
+                };
+                const handleError = () => {
+                    setAudioError(true);
+                    setAudioLoaded(false);
+                };
+                const handlePlay = () => setAudioPlaying(true);
+                const handlePause = () => setAudioPlaying(false);
+                const handleEnded = () => setAudioPlaying(false);
+
+                audio.addEventListener('loadeddata', handleLoaded);
+                audio.addEventListener('error', handleError);
+                audio.addEventListener('play', handlePlay);
+                audio.addEventListener('pause', handlePause);
+                audio.addEventListener('ended', handleEnded);
+
+                // Check if already loaded
+                if (audio.readyState >= 2) {
+                    setAudioLoaded(true);
+                }
+
+                return () => {
+                    audio.removeEventListener('loadeddata', handleLoaded);
+                    audio.removeEventListener('error', handleError);
+                    audio.removeEventListener('play', handlePlay);
+                    audio.removeEventListener('pause', handlePause);
+                    audio.removeEventListener('ended', handleEnded);
+                };
+            }, []);
 
             // ——— Entrance handler ———
             const handleEnter = useCallback(() => {
                 setEntered(true);
-                // Hide overlay
                 const overlay = document.getElementById('entrance-overlay');
                 if (overlay) overlay.classList.add('hidden');
 
-                // Play audio
-                if (audioRef.current) {
-                    audioRef.current.volume = 0.35;
-                    audioRef.current.play().catch((e) => {
-                        console.warn('Audio autoplay blocked, retry on next interaction:', e);
-                        // Retry with a user gesture fallback
-                        const resumeAudio = () => {
-                            if (audioRef.current) {
-                                audioRef.current.play().catch(() => {});
-                            }
-                            document.removeEventListener('click', resumeAudio);
-                            document.removeEventListener('touchstart', resumeAudio);
-                        };
-                        document.addEventListener('click', resumeAudio, { once: true });
-                        document.addEventListener('touchstart', resumeAudio, { once: true });
-                    });
+                // Play audio with robust handling
+                const audio = audioRef.current;
+                if (audio) {
+                    audio.volume = 0.35;
+                    const playPromise = audio.play();
+                    if (playPromise !== undefined) {
+                        playPromise.catch((e) => {
+                            console.warn('Audio play blocked:', e);
+                            setAudioError(true);
+                            // Retry on user interaction
+                            const resume = () => {
+                                if (audioRef.current) {
+                                    audioRef.current.play().catch(() => {});
+                                }
+                                document.removeEventListener('click', resume);
+                                document.removeEventListener('touchstart', resume);
+                            };
+                            document.addEventListener('click', resume, { once: true });
+                            document.addEventListener('touchstart', resume, { once: true });
+                        });
+                    }
                 }
             }, []);
 
@@ -496,10 +574,11 @@
             const toggleMute = useCallback(() => {
                 const newMute = !isMuted;
                 setIsMuted(newMute);
-                if (audioRef.current) {
-                    audioRef.current.muted = newMute;
+                const audio = audioRef.current;
+                if (audio) {
+                    audio.muted = newMute;
                     if (!newMute) {
-                        audioRef.current.play().catch(() => {});
+                        audio.play().catch(() => {});
                     }
                 }
             }, [isMuted]);
@@ -518,28 +597,28 @@
                 return (
                     <div id="entrance-overlay">
                         <div className="text-center z-10 px-4 max-w-lg mx-auto">
-                            <div className="relative inline-block mb-4 md:mb-6">
-                                <i className="fa-solid fa-fire-flame-curved text-6xl sm:text-7xl md:text-8xl text-fire-500 animate-pulse-fast"></i>
+                            <div className="relative inline-block mb-3 md:mb-5">
+                                <i className="fa-solid fa-fire-flame-curved text-5xl sm:text-7xl md:text-8xl text-fire-500 animate-pulse-fast"></i>
                                 <div className="absolute -inset-4 rounded-full bg-fire-500/10 blur-2xl animate-pulse"></div>
                             </div>
-                            <h1 className="font-display text-4xl sm:text-5xl md:text-7xl font-black uppercase text-gradient leading-tight drop-shadow-lg">
+                            <h1 className="font-display text-3xl sm:text-5xl md:text-7xl font-black uppercase text-gradient leading-tight drop-shadow-lg">
                                 Rise Up 90
                             </h1>
-                            <p className="text-gray-400 text-sm sm:text-base md:text-lg mt-2 md:mt-4 uppercase tracking-[0.15em] font-semibold">
+                            <p className="text-gray-400 text-xs sm:text-base md:text-lg mt-1.5 md:mt-3 uppercase tracking-[0.15em] font-semibold">
                                 The Challenge Starts Now.
                             </p>
                             <button
                                 onClick={handleEnter}
-                                className="mt-6 md:mt-10 bg-gradient-to-r from-fire-600 to-fire-500 hover:from-fire-500 hover:to-gold-500 text-white font-display font-black text-base sm:text-lg md:text-2xl py-3.5 px-8 md:py-5 md:px-14 rounded-full shadow-[0_0_40px_rgba(255,78,0,0.35)] hover:shadow-[0_0_60px_rgba(255,215,0,0.4)] transform hover:scale-105 transition-all duration-300 uppercase tracking-wider w-full sm:w-auto touch-manipulation active:scale-95"
+                                className="mt-5 md:mt-8 bg-gradient-to-r from-fire-600 to-fire-500 hover:from-fire-500 hover:to-gold-500 text-white font-display font-black text-base sm:text-lg md:text-2xl py-3 px-7 md:py-4.5 md:px-12 rounded-full shadow-[0_0_40px_rgba(255,78,0,0.35)] hover:shadow-[0_0_60px_rgba(255,215,0,0.4)] transform hover:scale-105 transition-all duration-300 uppercase tracking-wider w-full sm:w-auto touch-manipulation active:scale-95"
                             >
                                 <i className="fa-solid fa-bolt mr-2"></i> Ignite
                                 <i className="fa-solid fa-arrow-right ml-2"></i>
                             </button>
-                            <p className="text-[9px] sm:text-[10px] text-gray-600 mt-4 md:mt-6 font-bold tracking-widest uppercase flex items-center justify-center gap-1.5">
+                            <div className="flex items-center justify-center gap-2 mt-3 md:mt-5 text-[8px] sm:text-[10px] text-gray-600 font-bold tracking-widest uppercase">
                                 <i className="fa-solid fa-headphones text-fire-500/60"></i>
                                 <span className="audio-hint">Tap · Audio experience</span>
                                 <i className="fa-solid fa-music text-fire-500/60"></i>
-                            </p>
+                            </div>
                         </div>
                     </div>
                 );
@@ -547,39 +626,55 @@
 
             // ——— MAIN DASHBOARD ———
             return (
-                <div className="min-h-screen p-2.5 sm:p-4 md:p-8 font-sans pb-24 relative z-10">
+                <div className="min-h-screen p-2 sm:p-3 md:p-6 font-sans pb-20 relative z-10 no-scroll-x">
 
-                    {/* Audio Element — using 'passo.mp3' as requested */}
-                    <audio ref={audioRef} src="https://ronianurag.github.io/90-DAYS/passo.mp3" loop preload="auto" />
-                    
-                    {/* Audio Control */}
-                    <button
-                        onClick={toggleMute}
-                        className="fixed top-2.5 right-2.5 sm:top-4 sm:right-4 md:top-6 md:right-6 z-50 card-glass p-2 sm:p-3 rounded-full text-white hover:text-fire-500 border border-gray-700 transition-all shadow-lg backdrop-blur-md hover:border-fire-500/50 touch-manipulation"
-                        aria-label="Toggle music"
-                    >
-                        {isMuted ?
-                            <i className="fa-solid fa-volume-xmark text-sm sm:text-base md:text-lg w-4 sm:w-5 text-center text-gray-500"></i> :
-                            <i className="fa-solid fa-volume-high text-sm sm:text-base md:text-lg w-4 sm:w-5 text-center text-fire-500 animate-pulse-fast"></i>
-                        }
-                    </button>
+                    {/* Audio Element */}
+                    <audio
+                        ref={audioRef}
+                        src="https://ronianurag.github.io/90-DAYS/passo.mp3"
+                        loop
+                        preload="auto"
+                        muted={isMuted}
+                    />
+
+                    {/* Audio Control + Status */}
+                    <div className="fixed top-2 right-2 sm:top-3 sm:right-3 md:top-5 md:right-5 z-50 flex items-center gap-2">
+                        {/* Audio status indicator */}
+                        <div className="hidden sm:flex items-center gap-1.5 bg-black/60 backdrop-blur-sm rounded-full px-2.5 py-1 border border-gray-700/50">
+                            <span className={`w-1.5 h-1.5 rounded-full ${audioPlaying ? 'bg-green-400 animate-pulse' : audioError ? 'bg-red-500' : audioLoaded ? 'bg-yellow-400' : 'bg-gray-500'}`}></span>
+                            <span className="text-[8px] text-gray-400 font-medium tracking-wider">
+                                {audioPlaying ? 'LIVE' : audioError ? '⚠️ Audio' : audioLoaded ? 'Ready' : 'Loading...'}
+                            </span>
+                        </div>
+                        {/* Mute button */}
+                        <button
+                            onClick={toggleMute}
+                            className="card-glass p-2 sm:p-2.5 rounded-full text-white hover:text-fire-500 border border-gray-700 transition-all shadow-lg backdrop-blur-md hover:border-fire-500/50 touch-manipulation"
+                            aria-label="Toggle music"
+                        >
+                            {isMuted ?
+                                <i className="fa-solid fa-volume-xmark text-xs sm:text-sm md:text-base w-4 text-center text-gray-500"></i> :
+                                <i className="fa-solid fa-volume-high text-xs sm:text-sm md:text-base w-4 text-center text-fire-500 animate-pulse-fast"></i>
+                            }
+                        </button>
+                    </div>
 
                     {/* ——— HEADER ——— */}
-                    <div className="text-center mb-5 sm:mb-8 md:mb-10 mt-12 sm:mt-14 md:mt-0 px-1.5">
-                        <h1 className="font-display text-2xl sm:text-4xl md:text-6xl lg:text-7xl font-black uppercase text-gradient leading-tight tracking-tight drop-shadow-[0_0_30px_rgba(255,78,0,0.12)]">
+                    <div className="text-center mb-4 sm:mb-6 md:mb-8 mt-10 sm:mt-12 md:mt-0 px-1">
+                        <h1 className="font-display text-2xl sm:text-4xl md:text-6xl lg:text-7xl font-black uppercase text-gradient leading-tight tracking-tight drop-shadow-[0_0_30px_rgba(255,78,0,0.10)]">
                             Rise Up 90
                         </h1>
-                        <div className="mt-1.5 max-w-2xl mx-auto px-2">
-                            <p className="text-gray-400 text-[10px] sm:text-xs md:text-lg font-semibold tracking-widest uppercase opacity-80 min-h-[2.4em] flex items-center justify-center gap-1.5">
-                                <i className="fa-solid fa-quote-left text-fire-500/40 text-[8px] sm:text-xs"></i>
-                                <span className="text-center leading-tight">{MOTIVATIONAL_QUOTES[quoteIndex]}</span>
-                                <i className="fa-solid fa-quote-right text-fire-500/40 text-[8px] sm:text-xs"></i>
+                        <div className="mt-1 max-w-2xl mx-auto px-2">
+                            <p className="text-gray-400 text-[9px] sm:text-xs md:text-base font-semibold tracking-widest uppercase opacity-80 min-h-[2.2em] flex items-center justify-center gap-1.5">
+                                <i className="fa-solid fa-quote-left text-fire-500/40 text-[7px] sm:text-[10px]"></i>
+                                <span className="text-center leading-tight text-[10px] sm:text-sm md:text-base">{MOTIVATIONAL_QUOTES[quoteIndex]}</span>
+                                <i className="fa-solid fa-quote-right text-fire-500/40 text-[7px] sm:text-[10px]"></i>
                             </p>
                         </div>
                     </div>
 
                     {/* ——— TIMER ——— */}
-                    <div className="flex justify-center gap-1 sm:gap-2.5 md:gap-5 mb-6 sm:mb-8 md:mb-10">
+                    <div className="flex justify-center gap-1 sm:gap-2 md:gap-4 mb-5 sm:mb-7 md:mb-9">
                         {[
                             { label: 'Days', value: timeLeft.days },
                             { label: 'Hrs', value: timeLeft.hours },
@@ -588,12 +683,12 @@
                         ].map((t, i) => (
                             <div
                                 key={i}
-                                className="card-glass rounded-xl p-1.5 sm:p-3 md:p-5 min-w-[50px] sm:min-w-[72px] md:min-w-[100px] lg:min-w-[120px] flex flex-col items-center justify-center border-t-2 border-t-fire-500 shadow-[0_0_20px_rgba(255,78,0,0.04)]"
+                                className="card-glass rounded-xl p-1.5 sm:p-3 md:p-4 min-w-[44px] sm:min-w-[68px] md:min-w-[90px] lg:min-w-[110px] flex flex-col items-center justify-center border-t-2 border-t-fire-500 shadow-[0_0_20px_rgba(255,78,0,0.04)]"
                             >
-                                <span className="font-display text-xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white timer-digit leading-none">
+                                <span className="font-display text-lg sm:text-2xl md:text-4xl lg:text-5xl font-bold text-white timer-digit leading-none">
                                     {String(t.value).padStart(2, '0')}
                                 </span>
-                                <span className="text-[7px] sm:text-[10px] md:text-xs text-gray-400 uppercase font-bold tracking-widest mt-0.5">
+                                <span className="text-[6px] sm:text-[9px] md:text-xs text-gray-400 uppercase font-bold tracking-widest mt-0.5">
                                     {t.label}
                                 </span>
                             </div>
@@ -601,23 +696,23 @@
                     </div>
 
                     {/* ——— MAIN GRID ——— */}
-                    <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-5 md:gap-8">
+                    <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4 md:gap-6">
 
                         {/* LEFT COLUMN */}
-                        <div className="lg:col-span-5 flex flex-col gap-3 sm:gap-5">
+                        <div className="lg:col-span-5 flex flex-col gap-3 sm:gap-4">
 
                             {/* Commission */}
-                            <div className="card-glass rounded-2xl p-3.5 sm:p-5 md:p-6 relative overflow-hidden group card-enter border-l-4 border-l-green-500">
+                            <div className="card-glass rounded-2xl p-3 sm:p-4 md:p-5 relative overflow-hidden group card-enter border-l-4 border-l-green-500">
                                 <div className="absolute inset-0 bg-gradient-to-r from-green-900/20 to-emerald-900/10 opacity-60"></div>
                                 <div className="relative z-10 text-center">
-                                    <h2 className="text-gray-400 uppercase tracking-[0.12em] text-[9px] sm:text-xs font-bold mb-0.5">
-                                        <i className="fa-solid fa-money-bill-wave text-green-400 mr-1.5"></i> Your 19% Commission
+                                    <h2 className="text-gray-400 uppercase tracking-[0.12em] text-[8px] sm:text-[10px] md:text-xs font-bold mb-0.5">
+                                        <i className="fa-solid fa-money-bill-wave text-green-400 mr-1"></i> Your 19% Commission
                                     </h2>
-                                    <div className="font-display text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-green-400 commission-pulse break-words drop-shadow-[0_0_20px_rgba(74,222,128,0.25)]">
+                                    <div className="font-display text-xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-green-400 commission-pulse break-words drop-shadow-[0_0_20px_rgba(74,222,128,0.20)]">
                                         {formatINR(commission)}
                                     </div>
                                     {commission > 0 && (
-                                        <div className="mt-1 text-green-300 text-[9px] sm:text-xs font-bold animate-pulse uppercase tracking-wider">
+                                        <div className="mt-0.5 text-green-300 text-[8px] sm:text-[10px] md:text-xs font-bold animate-pulse uppercase tracking-wider">
                                             ⚡ Pure Profit — Keep Crushing!
                                         </div>
                                     )}
@@ -625,39 +720,39 @@
                             </div>
 
                             {/* Inputs */}
-                            <div className="card-glass rounded-2xl p-3.5 sm:p-5 md:p-6 border-l-4 border-l-fire-500 card-enter">
-                                <h3 className="font-display text-base sm:text-xl md:text-2xl font-bold mb-3 sm:mb-4 text-white uppercase border-b border-gray-800 pb-2 flex items-center gap-2">
-                                    <i className="fa-solid fa-sliders text-fire-500 text-sm sm:text-base"></i> Log Progress
+                            <div className="card-glass rounded-2xl p-3 sm:p-4 md:p-5 border-l-4 border-l-fire-500 card-enter">
+                                <h3 className="font-display text-sm sm:text-lg md:text-xl font-bold mb-2.5 sm:mb-3 text-white uppercase border-b border-gray-800 pb-1.5 flex items-center gap-2">
+                                    <i className="fa-solid fa-sliders text-fire-500 text-xs sm:text-sm"></i> Log Progress
                                 </h3>
 
-                                <div className="mb-3.5 sm:mb-4">
-                                    <label className="block text-gray-400 text-[9px] sm:text-xs font-bold mb-1 uppercase tracking-wider">
+                                <div className="mb-3 sm:mb-3.5">
+                                    <label className="block text-gray-400 text-[8px] sm:text-[10px] md:text-xs font-bold mb-1 uppercase tracking-wider">
                                         <i className="fa-solid fa-building mr-1"></i> Allotments / Bookings
                                     </label>
                                     <div className="flex items-center">
                                         <button
                                             onClick={() => setAllotments(Math.max(0, allotments - 1))}
-                                            className="bg-gray-800 hover:bg-gray-700 text-white p-2.5 sm:p-4 rounded-l-xl transition touch-manipulation active:scale-95"
+                                            className="bg-gray-800 hover:bg-gray-700 text-white p-2 sm:p-3 rounded-l-xl transition touch-manipulation active:scale-95"
                                         >
-                                            <i className="fa-solid fa-minus text-xs sm:text-base"></i>
+                                            <i className="fa-solid fa-minus text-xs sm:text-sm"></i>
                                         </button>
                                         <input
                                             type="number"
                                             value={allotments}
                                             onChange={(e) => setAllotments(parseInt(e.target.value) || 0)}
-                                            className="w-full bg-black border-y border-gray-700 text-center text-xl sm:text-3xl font-display font-bold text-white py-1.5 sm:py-2.5 focus:outline-none focus:border-fire-500 transition min-w-0"
+                                            className="w-full bg-black border-y border-gray-700 text-center text-lg sm:text-2xl md:text-3xl font-display font-bold text-white py-1 sm:py-2 focus:outline-none focus:border-fire-500 transition min-w-0"
                                         />
                                         <button
                                             onClick={() => setAllotments(allotments + 1)}
-                                            className="bg-fire-600 hover:bg-fire-500 text-white p-2.5 sm:p-4 rounded-r-xl transition touch-manipulation active:scale-95"
+                                            className="bg-fire-600 hover:bg-fire-500 text-white p-2 sm:p-3 rounded-r-xl transition touch-manipulation active:scale-95"
                                         >
-                                            <i className="fa-solid fa-plus text-xs sm:text-base"></i>
+                                            <i className="fa-solid fa-plus text-xs sm:text-sm"></i>
                                         </button>
                                     </div>
                                 </div>
 
                                 <div>
-                                    <label className="block text-gray-400 text-[9px] sm:text-xs font-bold mb-1 uppercase tracking-wider">
+                                    <label className="block text-gray-400 text-[8px] sm:text-[10px] md:text-xs font-bold mb-1 uppercase tracking-wider">
                                         <i className="fa-solid fa-indian-rupee-sign mr-1"></i> Total Plot Value Sold
                                     </label>
                                     <input
@@ -665,35 +760,35 @@
                                         value={revenueInput}
                                         onChange={handleRevenueChange}
                                         placeholder="Enter amount …"
-                                        className="w-full bg-black border border-gray-700 rounded-xl text-lg sm:text-2xl font-display font-bold text-white p-2.5 sm:p-4 focus:outline-none focus:border-fire-500 transition mb-2.5"
+                                        className="w-full bg-black border border-gray-700 rounded-xl text-base sm:text-xl md:text-2xl font-display font-bold text-white p-2 sm:p-3 focus:outline-none focus:border-fire-500 transition mb-2"
                                     />
-                                    <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                                    <div className="flex flex-wrap gap-1 sm:gap-1.5">
                                         <button
                                             onClick={() => addRevenue(1000000)}
-                                            className="text-[9px] sm:text-xs bg-gray-800 hover:bg-gray-700 px-2 sm:px-3 py-1.5 rounded-lg text-gray-300 transition flex-1 text-center whitespace-nowrap touch-manipulation active:scale-95"
+                                            className="text-[8px] sm:text-[10px] md:text-xs bg-gray-800 hover:bg-gray-700 px-1.5 sm:px-2.5 py-1 sm:py-1.5 rounded-lg text-gray-300 transition flex-1 text-center whitespace-nowrap touch-manipulation active:scale-95"
                                         >
                                             +1 Lakh
                                         </button>
                                         <button
                                             onClick={() => addRevenue(5000000)}
-                                            className="text-[9px] sm:text-xs bg-gray-800 hover:bg-gray-700 px-2 sm:px-3 py-1.5 rounded-lg text-gray-300 transition flex-1 text-center whitespace-nowrap touch-manipulation active:scale-95"
+                                            className="text-[8px] sm:text-[10px] md:text-xs bg-gray-800 hover:bg-gray-700 px-1.5 sm:px-2.5 py-1 sm:py-1.5 rounded-lg text-gray-300 transition flex-1 text-center whitespace-nowrap touch-manipulation active:scale-95"
                                         >
                                             +5 Lakhs
                                         </button>
                                         <button
                                             onClick={() => addRevenue(10000000)}
-                                            className="text-[9px] sm:text-xs bg-gray-800 hover:bg-gray-700 px-2 sm:px-3 py-1.5 rounded-lg text-gold-400 transition flex-1 text-center whitespace-nowrap touch-manipulation active:scale-95"
+                                            className="text-[8px] sm:text-[10px] md:text-xs bg-gray-800 hover:bg-gray-700 px-1.5 sm:px-2.5 py-1 sm:py-1.5 rounded-lg text-gold-400 transition flex-1 text-center whitespace-nowrap touch-manipulation active:scale-95"
                                         >
                                             +10 Lakhs
                                         </button>
                                         <button
                                             onClick={() => setRevenueInput("")}
-                                            className="text-[9px] sm:text-xs bg-red-900/40 hover:bg-red-900/60 px-2 sm:px-3 py-1.5 rounded-lg text-red-300 transition touch-manipulation active:scale-95"
+                                            className="text-[8px] sm:text-[10px] md:text-xs bg-red-900/40 hover:bg-red-900/60 px-1.5 sm:px-2.5 py-1 sm:py-1.5 rounded-lg text-red-300 transition touch-manipulation active:scale-95"
                                         >
                                             Reset
                                         </button>
                                     </div>
-                                    <div className="mt-1.5 text-right text-[10px] sm:text-sm text-gray-400 font-medium">
+                                    <div className="mt-1 text-right text-[9px] sm:text-xs text-gray-400 font-medium">
                                         Value: <span className="text-white font-bold">{formatINR(revenue)}</span>
                                     </div>
                                 </div>
@@ -701,16 +796,16 @@
                         </div>
 
                         {/* RIGHT COLUMN */}
-                        <div className="lg:col-span-7 flex flex-col gap-3 sm:gap-5">
+                        <div className="lg:col-span-7 flex flex-col gap-3 sm:gap-4">
 
                             {/* Bonanza Status */}
-                            <div className="card-glass rounded-2xl p-3.5 sm:p-5 md:p-6 card-enter">
-                                <div className="flex justify-between items-center mb-3 sm:mb-4 border-b border-gray-800 pb-2">
-                                    <h3 className="font-display text-base sm:text-xl md:text-2xl font-bold text-white uppercase flex items-center gap-2">
-                                        <i className="fa-solid fa-trophy text-gold-400 text-sm sm:text-base"></i> Bonanza
+                            <div className="card-glass rounded-2xl p-3 sm:p-4 md:p-5 card-enter">
+                                <div className="flex justify-between items-center mb-2.5 sm:mb-3 border-b border-gray-800 pb-1.5">
+                                    <h3 className="font-display text-sm sm:text-lg md:text-xl font-bold text-white uppercase flex items-center gap-2">
+                                        <i className="fa-solid fa-trophy text-gold-400 text-xs sm:text-sm"></i> Bonanza
                                     </h3>
                                     {currentTier && (
-                                        <span className="bg-green-900/40 text-green-400 text-[8px] sm:text-[10px] md:text-xs font-bold px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full border border-green-500/30 animate-pulse-fast whitespace-nowrap">
+                                        <span className="bg-green-900/40 text-green-400 text-[7px] sm:text-[9px] md:text-xs font-bold px-2 sm:px-2.5 py-0.5 rounded-full border border-green-500/30 animate-pulse-fast whitespace-nowrap">
                                             <i className="fa-solid fa-check-circle mr-0.5"></i> Unlocked
                                         </span>
                                     )}
@@ -718,43 +813,43 @@
 
                                 {/* Current Reward */}
                                 {currentTier ? (
-                                    <div className="bg-gradient-to-r from-fire-600/25 to-gold-500/15 rounded-xl p-3 sm:p-4 mb-4 text-center border border-fire-500/30 transform hover:scale-[1.01] transition shadow-[0_0_25px_rgba(255,78,0,0.06)]">
-                                        <p className="text-[8px] sm:text-[10px] font-bold uppercase tracking-wider mb-0.5 text-white/60">
+                                    <div className="bg-gradient-to-r from-fire-600/20 to-gold-500/10 rounded-xl p-2.5 sm:p-3 mb-3 text-center border border-fire-500/30 transform hover:scale-[1.01] transition shadow-[0_0_25px_rgba(255,78,0,0.05)]">
+                                        <p className="text-[7px] sm:text-[9px] font-bold uppercase tracking-wider mb-0.5 text-white/60">
                                             <i className="fa-solid fa-gem mr-1 text-gold-400"></i> Reward Unlocked
                                         </p>
-                                        <h4 className="font-display text-base sm:text-xl md:text-2xl lg:text-3xl font-black text-white drop-shadow-[0_0_15px_rgba(255,215,0,0.15)] leading-tight">
+                                        <h4 className="font-display text-sm sm:text-lg md:text-xl lg:text-2xl font-black text-white drop-shadow-[0_0_15px_rgba(255,215,0,0.12)] leading-tight">
                                             {currentTier.prize}
                                         </h4>
                                     </div>
                                 ) : (
-                                    <div className="bg-gray-800/25 rounded-xl p-3 sm:p-4 mb-4 text-center border border-gray-700">
-                                        <p className="text-[8px] sm:text-[10px] font-bold uppercase tracking-wider text-gray-400">
+                                    <div className="bg-gray-800/20 rounded-xl p-2.5 sm:p-3 mb-3 text-center border border-gray-700">
+                                        <p className="text-[7px] sm:text-[9px] font-bold uppercase tracking-wider text-gray-400">
                                             No Rewards Yet
                                         </p>
-                                        <h4 className="font-display text-sm sm:text-lg font-bold text-gray-300">Start Booking to Unlock</h4>
+                                        <h4 className="font-display text-xs sm:text-base font-bold text-gray-300">Start Booking to Unlock</h4>
                                     </div>
                                 )}
 
                                 {/* Next Target */}
                                 {nextTier && (
-                                    <div className="mb-4">
-                                        <h4 className="text-gray-400 font-bold uppercase text-[8px] sm:text-[10px] md:text-xs mb-2 tracking-wider flex items-center gap-1.5">
+                                    <div className="mb-3">
+                                        <h4 className="text-gray-400 font-bold uppercase text-[7px] sm:text-[9px] md:text-xs mb-1.5 tracking-wider flex items-center gap-1">
                                             <i className="fa-solid fa-crosshairs text-fire-500"></i>
-                                            Next Target: <span className="text-white">{nextTier.name}</span>
+                                            Next: <span className="text-white">{nextTier.name}</span>
                                         </h4>
-                                        <div className="grid grid-cols-2 gap-2 sm:gap-3">
-                                            <div className="bg-black/40 p-2.5 sm:p-3 rounded-xl border border-gray-700 text-center">
-                                                <p className="text-[7px] sm:text-[9px] text-gray-500 uppercase tracking-wider">Allotments</p>
-                                                <p className={`font-display font-bold text-sm sm:text-lg ${allotments >= nextTier.allotments ? 'text-green-400' : 'text-white'}`}>
+                                        <div className="grid grid-cols-2 gap-1.5 sm:gap-2">
+                                            <div className="bg-black/40 p-2 sm:p-2.5 rounded-xl border border-gray-700 text-center">
+                                                <p className="text-[6px] sm:text-[8px] text-gray-500 uppercase tracking-wider">Allotments</p>
+                                                <p className={`font-display font-bold text-xs sm:text-base ${allotments >= nextTier.allotments ? 'text-green-400' : 'text-white'}`}>
                                                     {allotments} / {nextTier.allotments}
                                                 </p>
                                                 {allotments >= nextTier.allotments && (
-                                                    <p className="text-green-400 text-[8px] sm:text-[10px] font-bold"><i className="fa-solid fa-check mr-0.5"></i> Done</p>
+                                                    <p className="text-green-400 text-[7px] sm:text-[9px] font-bold"><i className="fa-solid fa-check mr-0.5"></i> Done</p>
                                                 )}
                                             </div>
-                                            <div className="bg-black/40 p-2.5 sm:p-3 rounded-xl border border-gray-700 text-center">
-                                                <p className="text-[7px] sm:text-[9px] text-gray-500 uppercase tracking-wider">Revenue Req</p>
-                                                <p className={`font-display font-bold text-sm sm:text-lg ${revenue >= nextTier.revReq ? 'text-green-400' : 'text-white'}`}>
+                                            <div className="bg-black/40 p-2 sm:p-2.5 rounded-xl border border-gray-700 text-center">
+                                                <p className="text-[6px] sm:text-[8px] text-gray-500 uppercase tracking-wider">Revenue</p>
+                                                <p className={`font-display font-bold text-xs sm:text-base ${revenue >= nextTier.revReq ? 'text-green-400' : 'text-white'}`}>
                                                     {revenue >= nextTier.revReq ? "✅ Cleared" : (nextTier.revText || "—")}
                                                 </p>
                                             </div>
@@ -762,57 +857,57 @@
                                     </div>
                                 )}
 
-                                {/* All Tiers */}
-                                <div className="space-y-2 max-h-[220px] sm:max-h-[280px] overflow-y-auto pr-1">
+                                {/* All Tiers - scrollable */}
+                                <div className="space-y-1.5 max-h-[180px] sm:max-h-[220px] overflow-y-auto pr-1">
                                     {BONANZA_TIERS.map((tier) => {
                                         const unlocked = currentTier && tier.id <= currentTier.id;
                                         const isNext = nextTier && tier.id === nextTier.id;
                                         let bg = "bg-black/30 border-gray-800";
                                         let txt = "text-gray-400";
-                                        let icon = <i className="fa-solid fa-lock text-gray-600 text-[10px] sm:text-sm"></i>;
+                                        let icon = <i className="fa-solid fa-lock text-gray-600 text-[8px] sm:text-[10px]"></i>;
                                         if (unlocked) {
-                                            bg = "bg-green-900/20 border-green-500/30 shadow-[0_0_12px_rgba(74,222,128,0.04)]";
+                                            bg = "bg-green-900/20 border-green-500/30 shadow-[0_0_12px_rgba(74,222,128,0.03)]";
                                             txt = "text-green-400";
-                                            icon = <i className="fa-solid fa-check-circle text-green-400 text-[10px] sm:text-sm"></i>;
+                                            icon = <i className="fa-solid fa-check-circle text-green-400 text-[8px] sm:text-[10px]"></i>;
                                         } else if (isNext) {
-                                            bg = "bg-fire-900/20 border-fire-500/50 shadow-[0_0_20px_rgba(255,78,0,0.06)]";
+                                            bg = "bg-fire-900/20 border-fire-500/50 shadow-[0_0_20px_rgba(255,78,0,0.05)]";
                                             txt = "text-white";
-                                            icon = <i className="fa-solid fa-crosshairs text-fire-500 animate-pulse-fast text-[10px] sm:text-sm"></i>;
+                                            icon = <i className="fa-solid fa-crosshairs text-fire-500 animate-pulse-fast text-[8px] sm:text-[10px]"></i>;
                                         }
                                         return (
-                                            <div key={tier.id} className={`flex items-center justify-between p-2 sm:p-2.5 rounded-xl border ${bg} transition-all`}>
-                                                <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
-                                                    <div className="w-4 sm:w-5 text-center flex-shrink-0">{icon}</div>
+                                            <div key={tier.id} className={`flex items-center justify-between p-1.5 sm:p-2 rounded-xl border ${bg} transition-all`}>
+                                                <div className="flex items-center gap-2 sm:gap-2.5 min-w-0">
+                                                    <div className="w-3.5 sm:w-4 text-center flex-shrink-0">{icon}</div>
                                                     <div className="min-w-0">
-                                                        <div className={`font-bold text-[11px] sm:text-sm truncate ${txt}`}>{tier.prize}</div>
-                                                        <div className="text-[7px] sm:text-[9px] text-gray-500">Req: {tier.allotments} allot {tier.revReq > 0 ? `+ ${tier.revText}` : ''}</div>
+                                                        <div className={`font-bold text-[9px] sm:text-xs truncate ${txt}`}>{tier.prize}</div>
+                                                        <div className="text-[6px] sm:text-[8px] text-gray-500">Req: {tier.allotments} allot {tier.revReq > 0 ? `+ ${tier.revText}` : ''}</div>
                                                     </div>
                                                 </div>
                                             </div>
                                         );
                                     })}
-                                    <p className="text-[7px] sm:text-[9px] text-gray-500 mt-1.5 text-center">* 25% of plot value paid to qualify</p>
+                                    <p className="text-[6px] sm:text-[8px] text-gray-500 mt-1 text-center">* 25% of plot value paid to qualify</p>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     {/* ——— PROJECT CHEAT SHEET ——— */}
-                    <div className="max-w-7xl mx-auto mt-5 sm:mt-7">
-                        <div className="card-glass rounded-2xl p-3.5 sm:p-5 md:p-6 card-enter">
-                            <h3 className="font-display text-base sm:text-xl md:text-2xl font-bold mb-3 sm:mb-4 text-white uppercase border-b border-gray-800 pb-2 flex items-center gap-2">
-                                <i className="fa-solid fa-map-location-dot text-fire-500 text-sm sm:text-base"></i> Project Cheat Sheet
+                    <div className="max-w-7xl mx-auto mt-4 sm:mt-6">
+                        <div className="card-glass rounded-2xl p-3 sm:p-4 md:p-5 card-enter">
+                            <h3 className="font-display text-sm sm:text-lg md:text-xl font-bold mb-2.5 sm:mb-3 text-white uppercase border-b border-gray-800 pb-1.5 flex items-center gap-2">
+                                <i className="fa-solid fa-map-location-dot text-fire-500 text-xs sm:text-sm"></i> Project Cheat Sheet
                             </h3>
 
-                            {/* Filter Tabs */}
-                            <div className="flex overflow-x-auto hide-scrollbar gap-1 sm:gap-2 mb-3.5 sm:mb-5 pb-1.5 -mx-2 px-2 sm:mx-0 sm:px-0">
+                            {/* Filter Tabs - horizontal scroll on mobile */}
+                            <div className="flex overflow-x-auto hide-scrollbar gap-1 sm:gap-1.5 mb-3 sm:mb-4 pb-1 -mx-2 px-2 sm:mx-0 sm:px-0">
                                 {FILTER_TABS.map(tab => (
                                     <button
                                         key={tab.value}
                                         onClick={() => setActiveFilter(tab.value)}
-                                        className={`px-2.5 sm:px-4 py-1 sm:py-2 rounded-full text-[8px] sm:text-[10px] md:text-xs font-bold uppercase transition-all whitespace-nowrap flex-shrink-0 touch-manipulation ${
+                                        className={`px-2 sm:px-3.5 py-0.5 sm:py-1.5 rounded-full text-[7px] sm:text-[10px] md:text-xs font-bold uppercase transition-all whitespace-nowrap flex-shrink-0 touch-manipulation ${
                                             activeFilter === tab.value ?
-                                            'bg-fire-600 text-white shadow-[0_0_15px_rgba(227,60,0,0.3)]' :
+                                            'bg-fire-600 text-white shadow-[0_0_15px_rgba(227,60,0,0.25)]' :
                                             'bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white'
                                         }`}
                                     >
@@ -822,43 +917,43 @@
                             </div>
 
                             {/* Projects Grid */}
-                            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-2.5 sm:gap-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-2 sm:gap-3">
                                 {filteredProjects.map((proj, idx) => (
                                     <div
                                         key={proj.id}
-                                        className="bg-black/50 border border-gray-800 rounded-xl p-2.5 sm:p-4 hover:border-gray-600 transition group relative overflow-hidden flex flex-col justify-between hover:shadow-[0_0_25px_rgba(255,78,0,0.03)]"
+                                        className="bg-black/50 border border-gray-800 rounded-xl p-2 sm:p-3 hover:border-gray-600 transition group relative overflow-hidden flex flex-col justify-between hover:shadow-[0_0_25px_rgba(255,78,0,0.03)]"
                                         style={{ animationDelay: `${idx * 0.03}s` }}
                                     >
                                         <div>
-                                            <div className="absolute top-0 right-0 bg-gray-800/80 text-[7px] sm:text-[9px] font-bold px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-bl-xl text-gray-300 uppercase tracking-wider">
+                                            <div className="absolute top-0 right-0 bg-gray-800/80 text-[6px] sm:text-[8px] font-bold px-1.5 py-0.5 rounded-bl-xl text-gray-300 uppercase tracking-wider">
                                                 {proj.category}
                                             </div>
-                                            <h4 className="font-display font-bold text-xs sm:text-sm md:text-base text-white mb-0.5 pr-12 leading-tight project-name">
+                                            <h4 className="font-display font-bold text-[10px] sm:text-sm md:text-base text-white mb-0.5 pr-12 leading-tight project-name">
                                                 {proj.name}
                                             </h4>
-                                            <p className="text-gray-400 text-[10px] sm:text-xs mb-1.5 sm:mb-2.5 truncate">
-                                                <i className="fa-solid fa-location-dot text-red-500 mr-1 text-[8px] sm:text-[10px]"></i> {proj.location}
+                                            <p className="text-gray-400 text-[8px] sm:text-[10px] mb-1 sm:mb-1.5 truncate">
+                                                <i className="fa-solid fa-location-dot text-red-500 mr-0.5 text-[6px] sm:text-[8px]"></i> {proj.location}
                                             </p>
                                         </div>
-                                        <div className="flex flex-wrap items-end justify-between gap-1.5 sm:gap-2 mt-auto">
+                                        <div className="flex flex-wrap items-end justify-between gap-1 sm:gap-1.5 mt-auto">
                                             <div>
-                                                <div className="text-[7px] sm:text-[9px] text-gray-500 uppercase tracking-wider">Starting at</div>
-                                                <div className="font-bold text-gold-400 text-sm sm:text-base leading-none">
+                                                <div className="text-[6px] sm:text-[8px] text-gray-500 uppercase tracking-wider">Starting</div>
+                                                <div className="font-bold text-gold-400 text-[10px] sm:text-sm leading-none">
                                                     {proj.price}
-                                                    <span className="text-[7px] sm:text-[9px] font-normal text-gray-400">
+                                                    <span className="text-[6px] sm:text-[8px] font-normal text-gray-400">
                                                         {proj.sizes && proj.sizes.includes('Gunta') ? '' : '/ sq.yd'}
                                                     </span>
                                                 </div>
                                             </div>
-                                            <div className="flex gap-0.5 sm:gap-1 flex-wrap justify-end">
-                                                {proj.tags.slice(0, 3).map((tag, i) => (
-                                                    <span key={i} className="bg-gray-800/70 text-gray-300 text-[6px] sm:text-[8px] px-1 sm:px-1.5 py-0.5 rounded whitespace-nowrap">
+                                            <div className="flex gap-0.5 flex-wrap justify-end">
+                                                {proj.tags.slice(0, 2).map((tag, i) => (
+                                                    <span key={i} className="bg-gray-800/70 text-gray-300 text-[5px] sm:text-[7px] px-1 py-0.5 rounded whitespace-nowrap">
                                                         {tag}
                                                     </span>
                                                 ))}
-                                                {proj.tags.length > 3 && (
-                                                    <span className="bg-gray-800/70 text-gray-400 text-[6px] sm:text-[8px] px-1 sm:px-1.5 py-0.5 rounded whitespace-nowrap">
-                                                        +{proj.tags.length - 3}
+                                                {proj.tags.length > 2 && (
+                                                    <span className="bg-gray-800/70 text-gray-400 text-[5px] sm:text-[7px] px-1 py-0.5 rounded whitespace-nowrap">
+                                                        +{proj.tags.length - 2}
                                                     </span>
                                                 )}
                                             </div>
@@ -870,8 +965,8 @@
                     </div>
 
                     {/* ——— FOOTER ——— */}
-                    <div className="max-w-7xl mx-auto mt-5 sm:mt-7 text-center text-[8px] sm:text-[10px] text-gray-600 border-t border-gray-800/50 pt-3 sm:pt-5">
-                        <p className="tracking-widest uppercase flex items-center justify-center gap-1.5 flex-wrap">
+                    <div className="max-w-7xl mx-auto mt-4 sm:mt-6 text-center text-[7px] sm:text-[9px] text-gray-600 border-t border-gray-800/50 pt-2.5 sm:pt-4">
+                        <p className="tracking-widest uppercase flex items-center justify-center gap-1 flex-wrap">
                             <i className="fa-solid fa-fire text-fire-500/40"></i>
                             Rise Up 90 — Dominate. Crush. Win.
                             <i className="fa-solid fa-fire text-fire-500/40"></i>
@@ -885,27 +980,20 @@
         document.addEventListener('DOMContentLoaded', () => {
             const container = document.getElementById('fire-particles');
             if (container) {
-                const count = window.innerWidth < 480 ? 25 : 45;
+                const count = window.innerWidth < 480 ? 20 : 40;
                 for (let i = 0; i < count; i++) {
                     const p = document.createElement('div');
                     p.className = 'particle';
-                    const size = window.innerWidth < 480 ? (2 + Math.random() * 4) : (3 + Math.random() * 6);
+                    const size = window.innerWidth < 480 ? (2 + Math.random() * 3) : (3 + Math.random() * 5);
                     p.style.width = size + 'px';
                     p.style.height = size + 'px';
                     p.style.left = Math.random() * 100 + '%';
                     p.style.top = Math.random() * 100 + '%';
-                    p.style.animationDuration = (2.2 + Math.random() * 3) + 's';
+                    p.style.animationDuration = (2.0 + Math.random() * 3) + 's';
                     p.style.animationDelay = (Math.random() * 4) + 's';
-                    p.style.opacity = 0.15 + Math.random() * 0.35;
+                    p.style.opacity = 0.12 + Math.random() * 0.30;
                     container.appendChild(p);
                 }
-            }
-
-            // Handle entrance overlay if React hasn't mounted yet (fallback)
-            const overlay = document.getElementById('entrance-overlay');
-            if (overlay) {
-                // If user clicks anywhere on overlay (background), trigger enter
-                // But we'll let React handle it via the button
             }
         });
 
