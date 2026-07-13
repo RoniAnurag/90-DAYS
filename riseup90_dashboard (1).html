@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rise Up 90 - Sales Dashboard</title>
+    
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Oswald', 'sans-serif'],
+                    },
+                    colors: {
+                        fire: {
+                            500: '#ff4e00',
+                            600: '#e33c00',
+                            700: '#c42b00',
+                        },
+                        gold: {
+                            400: '#ffd700',
+                            500: '#f5c518',
+                        }
+                    },
+                    animation: {
+                        'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #050505;
+            color: #ffffff;
+            background-image: radial-gradient(circle at 50% 0%, #2a0800 0%, #050505 50%);
+            background-attachment: fixed;
+        }
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(90deg, #ff4e00, #f5c518);
+        }
+        .card-glass {
+            background: rgba(20, 20, 20, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 78, 0, 0.2);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        }
+        .progress-bar-striped {
+            background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+            background-size: 1rem 1rem;
+        }
+        
+        /* Hide scrollbar for a cleaner look but allow scrolling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #111; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ff4e00; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #f5c518; 
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // Bonanza Target Definitions
+        const BONANZA_TIERS = [
+            { id: 1, name: "Vietnam Trip", allotments: 2, revReq: 0, revText: "-", prize: "Vietnam Trip (Oct 2nd Wk)" },
+            { id: 2, name: "Gold + Vietnam", allotments: 3, revReq: 5000000, revText: "50 Lakhs", prize: "8g Gold + Vietnam" },
+            { id: 3, name: "China + iPhone", allotments: 5, revReq: 10000000, revText: "1 Crore", prize: "China + iPhone 17 Pro Max" },
+            { id: 4, name: "Car Down Payment", allotments: 10, revReq: 15000000, revText: "1.5 Crore", prize: "China + 4.5L Car DP" },
+            { id: 5, name: "House + Car", allotments: 15, revReq: 20000000, revText: "2 Crore", prize: "China + 14L House + 4L Car DP" },
+            { id: 6, name: "Ultimate Bonanza", allotments: 20, revReq: 25000000, revText: "2.5 Crore", prize: "China + 24L House + 5L Car DP" },
+        ];
+
+        const PROJECTS = [
+            // Shadnagar & Surrounding Corridor (South)
+            { id: 'p1', region: 'Shadnagar', category: 'Premium / Wellness', name: "Golden Heights Health Village", location: "Balanagar", price: "₹19,999", sizes: "150-400 Sq.Yd", tags: ["MUDA", "75 Acres", "51+ Amenities"] },
+            { id: 'p2', region: 'Shadnagar', category: 'Standard', name: "Iconic 2, 3, 4, 5", location: "Shadnagar", price: "₹18,399", sizes: "Var.", tags: ["HMDA/DTCP"] },
+            { id: 'p3', region: 'Shadnagar', category: 'Budget', name: "Spring City", location: "Shadnagar", price: "₹10,599", sizes: "Var.", tags: ["HMDA/DTCP"] },
+            { id: 'p4', region: 'Shadnagar', category: 'Standard', name: "Paradise 2", location: "Shadnagar", price: "₹17,399", sizes: "Var.", tags: ["HMDA/DTCP"] },
+            { id: 'p5', region: 'Shadnagar', category: 'Premium', name: "Iconic 6 & 7", location: "Bengaluru Hwy", price: "₹24,999", sizes: "Var.", tags: ["Highway Facing"] },
+            { id: 'p6', region: 'Shadnagar', category: 'Premium', name: "Iconic 9", location: "Burgula", price: "₹19,999", sizes: "Var.", tags: ["HMDA"] },
+            { id: 'p7', region: 'Shadnagar', category: 'Premium Farm', name: "Dream Valley 2", location: "Kamsanpally", price: "₹10.16L", sizes: "Per Gunta", tags: ["Resort Mem.", "Farm Plots"] },
+            { id: 'p8', region: 'Shadnagar', category: 'Premium Farm', name: "Dream Valley 3", location: "Nagulapally", price: "₹15.48L", sizes: "Per Gunta", tags: ["Resort Mem.", "Farm Plots"] },
+            { id: 'p9', region: 'Shadnagar', category: 'Value', name: "Golden Heights @ Rajapur", location: "Rajapur (NH44)", price: "Contact", sizes: "Var.", tags: ["MUDA", "Spot Reg."] },
+            
+            // Mumbai Highway Corridor (West)
+            { id: 'p10', region: 'Mumbai', category: 'Mega Project', name: "Golden Heights Smart County", location: "Budhera, Patloor", price: "₹10,499", sizes: "Var.", tags: ["DTCP", "65 Acres", "EMI Avail"] },
+            { id: 'p11', region: 'Mumbai', category: 'Mega Project', name: "Golden Heights @ Sadasivapet", location: "Sadasivapet", price: "₹10,499", sizes: "Var.", tags: ["DTCP", "Same as Smart County"] },
+            
+            // Warangal Highway / East Corridor
+            { id: 'p12', region: 'Warangal', category: 'Standard', name: "RK Enclave", location: "Ghatkesar", price: "₹18,899", sizes: "Var.", tags: ["HMDA", "Near AIIMS"] },
+            { id: 'p13', region: 'Warangal', category: 'Value', name: "Rayan Enclave", location: "Bibinagar", price: "₹13,399", sizes: "Var.", tags: ["HMDA", "Warangal Hwy"] },
+            { id: 'p14', region: 'Warangal', category: 'Value', name: "Aabharana", location: "Yadadri", price: "₹11,499", sizes: "110-165 Sq.Yd", tags: ["DTCP", "EMI Available"] },
+            
+            // Vijayawada Highway / South East
+            { id: 'p15', region: 'Vijayawada', category: 'Premium', name: "Prakriti Hill Township", location: "Piglipur", price: "₹22,999", sizes: "Var.", tags: ["Residential"] },
+            { id: 'p16', region: 'Vijayawada', category: 'Premium', name: "Medha County", location: "Koheda (East)", price: "₹20,999", sizes: "Var.", tags: ["HMDA"] },
+        ];
+
+        const FILTER_TABS = [
+            { label: "All Projects", value: "All" },
+            { label: "Shadnagar (South)", value: "Shadnagar" },
+            { label: "Mumbai Hwy (West)", value: "Mumbai" },
+            { label: "Warangal Hwy (East)", value: "Warangal" },
+            { label: "Vijayawada Hwy (SE)", value: "Vijayawada" },
+        ];
+
+        const formatINR = (number) => {
+            return new Intl.NumberFormat('en-IN', {
+                style: 'currency',
+                currency: 'INR',
+                maximumFractionDigits: 0
+            }).format(number);
+        };
+
+        const App = () => {
+            const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+            const [allotments, setAllotments] = useState(0);
+            const [revenueInput, setRevenueInput] = useState("");
+            const [activeFilter, setActiveFilter] = useState("All");
+            
+            // Derive revenue as number
+            const revenue = parseFloat(revenueInput.replace(/,/g, '')) || 0;
+            const commission = revenue * 0.19;
+
+            const filteredProjects = activeFilter === "All" 
+                ? PROJECTS 
+                : PROJECTS.filter(p => p.region === activeFilter);
+
+            useEffect(() => {
+                const targetDate = new Date("September 30, 2026 23:59:59").getTime();
+
+                const interval = setInterval(() => {
+                    const now = new Date().getTime();
+                    const distance = targetDate - now;
+
+                    if (distance < 0) {
+                        clearInterval(interval);
+                        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+                    } else {
+                        setTimeLeft({
+                            days: Math.floor(distance / (1000 * 60 * 60 * 24)),
+                            hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+                            minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+                            seconds: Math.floor((distance % (1000 * 60)) / 1000)
+                        });
+                    }
+                }, 1000);
+
+                return () => clearInterval(interval);
+            }, []);
+
+            const getCurrentTier = () => {
+                let highest = null;
+                for (let i = 0; i < BONANZA_TIERS.length; i++) {
+                    const tier = BONANZA_TIERS[i];
+                    if (allotments >= tier.allotments && revenue >= tier.revReq) {
+                        highest = tier;
+                    }
+                }
+                return highest;
+            };
+
+            const getNextTier = () => {
+                const current = getCurrentTier();
+                if (!current) return BONANZA_TIERS[0];
+                const currentIndex = BONANZA_TIERS.findIndex(t => t.id === current.id);
+                return BONANZA_TIERS[currentIndex + 1] || null;
+            };
+
+            const currentTier = getCurrentTier();
+            const nextTier = getNextTier();
+
+            // Handlers
+            const handleRevenueChange = (e) => {
+                // Allow only numbers
+                const val = e.target.value.replace(/[^0-9]/g, '');
+                setRevenueInput(val);
+            };
+
+            const addRevenue = (amount) => {
+                setRevenueInput((revenue + amount).toString());
+            };
+
+            return (
+                <div className="min-h-screen p-4 md:p-8 font-sans pb-24">
+                    
+                    {/* Header / Motivation */}
+                    <div className="text-center mb-10">
+                        <h1 className="font-display text-5xl md:text-7xl font-black mb-2 tracking-tight uppercase text-gradient">
+                            Rise Up 90 Challenge
+                        </h1>
+                        <p className="text-gray-400 text-lg md:text-xl font-semibold tracking-widest uppercase">
+                            Hustle until your haters ask if you're hiring.
+                        </p>
+                    </div>
+
+                    {}
+                    <div className="flex justify-center gap-2 md:gap-6 mb-12">
+                        {[
+                            { label: 'Days', value: timeLeft.days },
+                            { label: 'Hours', value: timeLeft.hours },
+                            { label: 'Mins', value: timeLeft.minutes },
+                            { label: 'Secs', value: timeLeft.seconds }
+                        ].map((time, idx) => (
+                            <div key={idx} className="card-glass rounded-xl p-4 md:p-6 w-20 md:w-32 flex flex-col items-center justify-center border-t-2 border-t-fire-500">
+                                <span className="font-display text-3xl md:text-5xl font-bold text-white mb-1">
+                                    {time.value.toString().padStart(2, '0')}
+                                </span>
+                                <span className="text-xs md:text-sm text-gray-400 uppercase font-bold tracking-wider">{time.label}</span>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8">
+                        
+                        {}
+                        <div className="lg:col-span-5 flex flex-col gap-6">
+                            
+                            {/* Commission Display (Psychological Boost) */}
+                            <div className="card-glass rounded-2xl p-6 relative overflow-hidden group">
+                                <div className="absolute inset-0 bg-gradient-to-r from-green-900/40 to-emerald-900/20 opacity-50"></div>
+                                <div className="relative z-10 text-center">
+                                    <h2 className="text-gray-400 uppercase tracking-widest text-sm font-bold mb-2">
+                                        <i className="fa-solid fa-money-bill-wave text-green-400 mr-2"></i> Your 19% Commission
+                                    </h2>
+                                    <div className="font-display text-5xl md:text-6xl font-black text-green-400 break-words drop-shadow-[0_0_15px_rgba(74,222,128,0.5)]">
+                                        {formatINR(commission)}
+                                    </div>
+                                    {commission > 0 && (
+                                        <div className="mt-2 text-green-300 text-sm font-bold animate-pulse">
+                                            Keep going! Pure Profit.
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+
+                            {/* Inputs */}
+                            <div className="card-glass rounded-2xl p-6 border-l-4 border-l-fire-500">
+                                <h3 className="font-display text-2xl font-bold mb-6 text-white uppercase border-b border-gray-800 pb-2">Log Your Progress</h3>
+                                
+                                <div className="mb-6">
+                                    <label className="block text-gray-400 text-sm font-bold mb-2 uppercase tracking-wide">
+                                        Total Allotments / Bookings
+                                    </label>
+                                    <div className="flex items-center">
+                                        <button onClick={() => setAllotments(Math.max(0, allotments - 1))} className="bg-gray-800 hover:bg-gray-700 text-white p-4 rounded-l-lg transition">
+                                            <i className="fa-solid fa-minus"></i>
+                                        </button>
+                                        <input 
+                                            type="number" 
+                                            value={allotments} 
+                                            onChange={(e) => setAllotments(parseInt(e.target.value) || 0)}
+                                            className="w-full bg-black border-y border-gray-700 text-center text-3xl font-display font-bold text-white py-2 focus:outline-none"
+                                        />
+                                        <button onClick={() => setAllotments(allotments + 1)} className="bg-fire-600 hover:bg-fire-500 text-white p-4 rounded-r-lg transition">
+                                            <i className="fa-solid fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label className="block text-gray-400 text-sm font-bold mb-2 uppercase tracking-wide">
+                                        Total Plot Value Sold (₹)
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        value={revenueInput}
+                                        onChange={handleRevenueChange}
+                                        placeholder="E.g., 5000000"
+                                        className="w-full bg-black border border-gray-700 rounded-lg text-2xl font-display font-bold text-white p-4 focus:outline-none focus:border-fire-500 transition mb-3"
+                                    />
+                                    <div className="flex flex-wrap gap-2">
+                                        <button onClick={() => addRevenue(1000000)} className="text-xs bg-gray-800 hover:bg-gray-700 px-3 py-1 rounded text-gray-300 transition">+1 Lakh</button>
+                                        <button onClick={() => addRevenue(5000000)} className="text-xs bg-gray-800 hover:bg-gray-700 px-3 py-1 rounded text-gray-300 transition">+5 Lakhs</button>
+                                        <button onClick={() => addRevenue(10000000)} className="text-xs bg-gray-800 hover:bg-gray-700 px-3 py-1 rounded text-gold-400 transition">+10 Lakhs</button>
+                                        <button onClick={() => setRevenueInput("")} className="text-xs bg-red-900/50 hover:bg-red-900 px-3 py-1 rounded text-red-300 transition ml-auto">Reset</button>
+                                    </div>
+                                    <div className="mt-3 text-right text-sm text-gray-400 font-medium">
+                                        Value: <span className="text-white">{formatINR(revenue)}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {}
+                        <div className="lg:col-span-7 flex flex-col gap-6">
+                            
+                            <div className="card-glass rounded-2xl p-6">
+                                <div className="flex justify-between items-center mb-6 border-b border-gray-800 pb-2">
+                                    <h3 className="font-display text-2xl font-bold text-white uppercase">Quarterly Bonanza Status</h3>
+                                    <i className="fa-solid fa-trophy text-gold-500 text-2xl"></i>
+                                </div>
+
+                                {/* Current Status Banner */}
+                                {currentTier ? (
+                                    <div className="bg-gradient-to-r from-fire-600 to-gold-500 rounded-xl p-4 mb-6 text-center transform hover:scale-[1.02] transition">
+                                        <p className="text-sm font-bold uppercase tracking-wider mb-1 text-white/80">Unlocked Reward</p>
+                                        <h4 className="font-display text-2xl md:text-3xl font-black text-white">{currentTier.prize}</h4>
+                                    </div>
+                                ) : (
+                                    <div className="bg-gray-800/50 rounded-xl p-4 mb-6 text-center border border-gray-700">
+                                        <p className="text-sm font-bold uppercase tracking-wider text-gray-400">Current Status</p>
+                                        <h4 className="font-display text-xl font-bold text-white">No Rewards Unlocked Yet. Get Booking!</h4>
+                                    </div>
+                                )}
+
+                                {/* Next Target logic */}
+                                {nextTier && (
+                                    <div className="mb-8">
+                                        <h4 className="text-gray-400 font-bold uppercase text-sm mb-3">Next Target: <span className="text-white">{nextTier.name}</span></h4>
+                                        
+                                        <div className="grid grid-cols-2 gap-4 mb-3">
+                                            <div className="bg-black/50 p-3 rounded-lg border border-gray-700">
+                                                <p className="text-xs text-gray-500 uppercase">Allotments</p>
+                                                <p className="font-display font-bold text-xl {allotments >= nextTier.allotments ? 'text-green-400' : 'text-white'}">
+                                                    {allotments} / {nextTier.allotments}
+                                                </p>
+                                            </div>
+                                            <div className="bg-black/50 p-3 rounded-lg border border-gray-700">
+                                                <p className="text-xs text-gray-500 uppercase">Revenue Req</p>
+                                                <p className="font-display font-bold text-lg md:text-xl {revenue >= nextTier.revReq ? 'text-green-400' : 'text-white'}">
+                                                    {revenue >= nextTier.revReq ? "Cleared" : nextTier.revText || "None"}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* All Tiers List */}
+                                <div className="space-y-3 mt-4 max-h-[300px] overflow-y-auto pr-2">
+                                    {BONANZA_TIERS.map((tier) => {
+                                        const isUnlocked = currentTier && tier.id <= currentTier.id;
+                                        const isNext = nextTier && tier.id === nextTier.id;
+                                        
+                                        let bgClass = "bg-black/40 border-gray-800";
+                                        let textClass = "text-gray-400";
+                                        let icon = <i className="fa-solid fa-lock text-gray-600"></i>;
+
+                                        if (isUnlocked) {
+                                            bgClass = "bg-green-900/20 border-green-500/30 shadow-[0_0_10px_rgba(74,222,128,0.1)]";
+                                            textClass = "text-green-400";
+                                            icon = <i className="fa-solid fa-check-circle text-green-400"></i>;
+                                        } else if (isNext) {
+                                            bgClass = "bg-fire-900/20 border-fire-500/50";
+                                            textClass = "text-white";
+                                            icon = <i className="fa-solid fa-crosshairs text-fire-500 animate-pulse-fast"></i>;
+                                        }
+
+                                        return (
+                                            <div key={tier.id} className={`flex items-center justify-between p-3 rounded-lg border ${bgClass} transition-all`}>
+                                                <div className="flex items-center gap-4">
+                                                    <div className="w-6 text-center">{icon}</div>
+                                                    <div>
+                                                        <div className={`font-bold ${textClass}`}>{tier.prize}</div>
+                                                        <div className="text-xs text-gray-500">Req: {tier.allotments} Allotments {tier.revReq > 0 ? `+ ${tier.revText}` : ''}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                    <p className="text-xs text-gray-500 mt-2 text-center">Note: 25% of plot value should be paid to get eligibility.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {}
+                    <div className="max-w-7xl mx-auto mt-8">
+                        <div className="card-glass rounded-2xl p-6">
+                            <h3 className="font-display text-2xl font-bold mb-6 text-white uppercase border-b border-gray-800 pb-2">
+                                <i className="fa-solid fa-map-location-dot text-fire-500 mr-2"></i> Project Cheat Sheet
+                            </h3>
+                            
+                            {}
+                            <div className="flex flex-wrap gap-2 mb-6">
+                                {FILTER_TABS.map(tab => (
+                                    <button 
+                                        key={tab.value}
+                                        onClick={() => setActiveFilter(tab.value)}
+                                        className={`px-4 py-2 rounded-full text-xs font-bold uppercase transition-all ${
+                                            activeFilter === tab.value
+                                            ? 'bg-fire-600 text-white shadow-[0_0_10px_rgba(227,60,0,0.5)]' 
+                                            : 'bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white'
+                                        }`}
+                                    >
+                                        {tab.label}
+                                    </button>
+                                ))}
+                            </div>
+
+                            {}
+                            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                                {filteredProjects.map(proj => (
+                                    <div key={proj.id} className="bg-black/60 border border-gray-800 rounded-xl p-4 hover:border-gray-500 transition group relative overflow-hidden">
+                                        <div className="absolute top-0 right-0 bg-gray-800 text-[10px] font-bold px-2 py-1 rounded-bl-lg text-gray-300 uppercase">
+                                            {proj.category}
+                                        </div>
+                                        <h4 className="font-display font-bold text-lg text-white mb-1 pr-12">{proj.name}</h4>
+                                        <p className="text-gray-400 text-sm mb-3"><i className="fa-solid fa-location-dot text-red-500 mr-1"></i> {proj.location}</p>
+                                        
+                                        <div className="flex justify-between items-end">
+                                            <div>
+                                                <div className="text-xs text-gray-500 uppercase">Starting at</div>
+                                                <div className="font-bold text-gold-400 text-xl">{proj.price} <span className="text-xs font-normal text-gray-400">{proj.sizes.includes('Gunta') ? '' : '/ sq.yd'}</span></div>
+                                            </div>
+                                            <div className="flex gap-1 flex-wrap justify-end max-w-[50%]">
+                                                {proj.tags.map((tag, i) => (
+                                                    <span key={i} className="bg-gray-800 text-gray-300 text-[10px] px-2 py-1 rounded whitespace-nowrap">{tag}</span>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
