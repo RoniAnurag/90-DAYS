@@ -286,251 +286,190 @@
                     <div className="min-h-screen flex items-center justify-center bg-black p-4 relative overflow-hidden">
                         <CleanBackground />
                         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/70 z-0"></div>
-                        <div className="text-center z-10 card-glass p-8 sm:p-12 rounded-3xl max-w-lg border-fire-500/40 border shadow-[0_0_60px_rgba(255,78,0,0.25)] w-full mx-4 flex flex-col items-center">
-                            <i className="fa-solid fa-fire-flame-curved text-6xl md:text-7xl text-fire-500 mb-6 animate-pulse-fast"></i>
-                            <h1 className="font-display text-5xl sm:text-6xl font-black mb-3 uppercase text-gradient drop-shadow-lg leading-tight">Rise Up 90</h1>
-                            <p className="text-gray-300 text-sm sm:text-base mb-10 uppercase tracking-[0.2em] font-semibold">IGNITE THE HUSTLE</p>
-                            
-                            <button onClick={handleEnter} className="bg-gradient-to-r from-fire-600 to-gold-500 hover:from-fire-500 hover:to-gold-400 text-white font-display font-black text-xl py-4 px-10 rounded-full shadow-[0_0_40px_rgba(255,78,0,0.5)] hover:shadow-[0_0_60px_rgba(245,197,24,0.5)] transform hover:scale-105 transition-all uppercase tracking-wider w-full flex items-center justify-center gap-3">
-                                <i className="fa-solid fa-play"></i> ENTER THE FIRE
+                        <div className="text-center z-10 card-glass p-6 sm:p-8 md:p-12 rounded-3xl max-w-2xl border-fire-500/40 border shadow-[0_0_60px_rgba(255,78,0,0.25)] w-full mx-4">
+                            <i className="fa-solid fa-fire-flame-curved text-6xl md:text-7xl text-fire-500 mb-4 animate-pulse-fast"></i>
+                            <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-black mb-2 uppercase text-gradient drop-shadow-lg leading-tight">Rise Up 90</h1>
+                            <p className="text-gray-300 text-sm sm:text-lg mb-8 uppercase tracking-[0.2em] font-semibold">IGNITE THE HUSTLE</p>
+                            <button onClick={handleEnter} className="bg-gradient-to-r from-fire-600 to-gold-500 hover:from-fire-500 hover:to-gold-400 text-white font-display font-black text-xl py-4 px-10 rounded-full shadow-[0_0_40px_rgba(255,78,0,0.5)] hover:shadow-[0_0_60px_rgba(245,197,24,0.5)] transform hover:scale-105 transition-all uppercase tracking-wider w-full sm:w-auto">
+                                <i className="fa-solid fa-play mr-2"></i> ENTER THE FIRE
                             </button>
-                            <p className="text-[10px] text-gray-500 mt-6 font-bold tracking-widest uppercase flex items-center justify-center gap-1">
-                                <i className="fa-solid fa-volume-high text-fire-500"></i> audio experience
-                            </p>
+                            <p className="text-[10px] text-gray-500 mt-6 font-bold tracking-widest uppercase"><i className="fa-solid fa-volume-high mr-1 text-fire-500"></i> audio experience</p>
                         </div>
                     </div>
                 );
             }
 
             return (
-                <div className="min-h-screen p-4 sm:p-6 md:p-8 font-sans pb-24 relative max-w-7xl mx-auto">
+                <div className="min-h-screen p-3 sm:p-4 md:p-6 font-sans pb-24 relative">
                     <CleanBackground />
                     <MoneyIcons />
                     
                     <audio ref={audioRef} src="https://ronianurag.github.io/90-DAYS/passo.mp3" preload="auto" />
 
-                    <button onClick={toggleMute} className="fixed top-4 right-4 z-50 card-glass w-12 h-12 flex items-center justify-center rounded-full text-white hover:text-fire-500 border border-gray-700 transition-colors shadow-lg backdrop-blur-md">
-                        {isMuted ? <i className="fa-solid fa-volume-xmark text-xl"></i> : <i className="fa-solid fa-volume-high text-xl text-fire-500"></i>}
+                    <button onClick={toggleMute} className="fixed top-3 right-3 z-50 card-glass p-2.5 rounded-full text-white hover:text-fire-500 border border-gray-700 transition-colors shadow-lg backdrop-blur-md">
+                        {isMuted ? <i className="fa-solid fa-volume-xmark text-lg w-5 text-center"></i> : <i className="fa-solid fa-volume-high text-lg w-5 text-center text-fire-500"></i>}
                     </button>
 
                     {/* Header */}
-                    <div className="text-center mb-8 mt-12 sm:mt-8 px-4">
-                        <h1 className="font-display text-5xl sm:text-6xl md:text-7xl font-black mb-2 tracking-tight uppercase text-gradient leading-tight">Rise Up 90</h1>
-                        <p className="text-gray-400 text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase">
-                            <i className="fa-solid fa-fire text-fire-500 mr-2"></i> HUSTLE · DOMINATE · REPEAT
+                    <div className="text-center mb-5 mt-14 sm:mt-4 px-2">
+                        <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-black mb-0 tracking-tight uppercase text-gradient leading-tight">Rise Up 90</h1>
+                        <p className="text-gray-400 text-xs sm:text-sm md:text-base font-semibold tracking-[0.2em] uppercase mt-1">
+                            <i className="fa-solid fa-fire text-fire-500 mr-1"></i> HUSTLE · DOMINATE · REPEAT
                         </p>
                     </div>
 
                     {/* Timer */}
-                    <div className="flex justify-center gap-3 sm:gap-6 mb-12 flex-wrap">
+                    <div className="flex justify-center gap-2 sm:gap-4 mb-8 flex-wrap">
                         {[
                             { label: 'Days', value: timeLeft.days },
                             { label: 'Hours', value: timeLeft.hours },
                             { label: 'Mins', value: timeLeft.minutes },
                             { label: 'Secs', value: timeLeft.seconds }
                         ].map((time, idx) => (
-                            <div key={idx} className="card-glass rounded-2xl p-4 w-20 sm:w-24 md:w-32 flex flex-col items-center justify-center border-t-4 border-t-fire-500 shadow-[inset_0_0_20px_rgba(255,78,0,0.1)]">
-                                <span className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-1">
+                            <div key={idx} className="card-glass rounded-xl p-2 sm:p-3 w-16 sm:w-20 md:w-28 flex flex-col items-center justify-center border-t-2 border-t-fire-500 shadow-[inset_0_0_20px_rgba(255,78,0,0.1)]">
+                                <span className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-0.5">
                                     {time.value.toString().padStart(2, '0')}
                                 </span>
-                                <span className="text-[10px] sm:text-xs text-gray-400 uppercase font-bold tracking-widest">{time.label}</span>
+                                <span className="text-[8px] sm:text-xs text-gray-400 uppercase font-bold tracking-wider">{time.label}</span>
                             </div>
                         ))}
                     </div>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
+                    <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-6">
                         {/* LEFT COLUMN */}
-                        <div className="lg:col-span-5 flex flex-col gap-6">
-                            
-                            {/* Commission Card */}
-                            <div className="card-glass rounded-3xl p-6 relative overflow-hidden group">
-                                <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
-                                    <i className="fa-solid fa-wallet text-7xl text-green-400"></i>
-                                </div>
-                                <div className="relative z-10">
-                                    <h2 className="text-gray-300 uppercase tracking-widest text-xs font-bold mb-2 flex items-center gap-2">
-                                        <i className="fa-solid fa-coins text-green-400"></i> YOUR 19% COMMISSION
+                        <div className="lg:col-span-5 flex flex-col gap-4">
+                            <div className="card-glass rounded-2xl p-4 sm:p-5 relative overflow-hidden">
+                                <div className="absolute inset-0 bg-gradient-to-r from-green-900/30 to-emerald-900/20"></div>
+                                <div className="relative z-10 text-center">
+                                    <h2 className="text-gray-300 uppercase tracking-widest text-[10px] sm:text-xs font-bold mb-1">
+                                        <i className="fa-solid fa-coins text-green-400 mr-1"></i> YOUR 19% COMMISSION
                                     </h2>
-                                    <div className="font-display text-5xl sm:text-6xl font-black text-green-400 break-words drop-shadow-[0_0_20px_rgba(74,222,128,0.3)] leading-none">
+                                    <div className="font-display text-3xl sm:text-4xl md:text-5xl font-black text-green-400 break-words drop-shadow-[0_0_20px_rgba(74,222,128,0.3)]">
                                         {formatINR(commission)}
                                     </div>
                                     {commission > 0 && (
-                                        <div className="mt-4 inline-block bg-green-500/20 text-green-400 px-3 py-1 rounded-full text-xs font-bold animate-pulse">
-                                            ⚡ FUEL THE FIRE ⚡
-                                        </div>
+                                        <div className="mt-1 text-green-300 text-xs font-bold animate-pulse">⚡ FUEL THE FIRE ⚡</div>
                                     )}
                                 </div>
                             </div>
 
-                            {/* Log Progress Card */}
-                            <div className="card-glass rounded-3xl p-6 border-l-4 border-l-fire-500">
-                                <div className="flex items-center gap-3 mb-6 border-b border-gray-800 pb-4">
-                                    <div className="w-10 h-10 rounded-full bg-fire-500/20 flex items-center justify-center">
-                                        <i className="fa-solid fa-sliders text-fire-500"></i>
+                            <div className="card-glass rounded-2xl p-4 sm:p-5 border-l-4 border-l-fire-500">
+                                <h3 className="font-display text-xl font-bold mb-4 text-white uppercase border-b border-gray-800 pb-2 flex items-center gap-2">
+                                    <i className="fa-solid fa-sliders text-fire-500"></i> LOG PROGRESS
+                                </h3>
+                                <div className="mb-4">
+                                    <label className="block text-gray-400 text-xs font-bold mb-1 uppercase tracking-wide">Allotments</label>
+                                    <div className="flex items-center">
+                                        <button onClick={() => setAllotments(Math.max(0, allotments - 1))} className="bg-gray-800 hover:bg-gray-700 text-white p-3 rounded-l-lg transition text-lg w-12">−</button>
+                                        <input type="number" value={allotments} onChange={(e) => setAllotments(parseInt(e.target.value) || 0)} className="w-full bg-black border-y border-gray-700 text-center text-2xl font-display font-bold text-white py-1.5 focus:outline-none" />
+                                        <button onClick={() => setAllotments(allotments + 1)} className="bg-fire-600 hover:bg-fire-500 text-white p-3 rounded-r-lg transition text-lg w-12">+</button>
                                     </div>
-                                    <h3 className="font-display text-2xl font-bold text-white uppercase">
-                                        LOG PROGRESS
-                                    </h3>
                                 </div>
-                                
-                                <div className="space-y-6">
-                                    <div>
-                                        <label className="block text-gray-400 text-xs font-bold mb-2 uppercase tracking-widest">Allotments</label>
-                                        <div className="flex items-stretch h-14">
-                                            <button onClick={() => setAllotments(Math.max(0, allotments - 1))} className="bg-gray-800 hover:bg-gray-700 text-white w-14 rounded-l-xl flex items-center justify-center transition text-2xl font-medium border-y border-l border-gray-700">−</button>
-                                            <input type="number" value={allotments} onChange={(e) => setAllotments(parseInt(e.target.value) || 0)} className="flex-1 bg-black/50 border-y border-gray-700 text-center text-2xl font-display font-bold text-white focus:outline-none" />
-                                            <button onClick={() => setAllotments(allotments + 1)} className="bg-fire-600 hover:bg-fire-500 text-white w-14 rounded-r-xl flex items-center justify-center transition text-2xl font-medium border-y border-r border-fire-600">+</button>
-                                        </div>
+                                <div>
+                                    <label className="block text-gray-400 text-xs font-bold mb-1 uppercase tracking-wide">Total Plot Value (₹)</label>
+                                    <input type="text" value={revenueInput} onChange={handleRevenueChange} placeholder="e.g., 5000000" className="w-full bg-black border border-gray-700 rounded-lg text-xl font-display font-bold text-white p-3 focus:outline-none focus:border-fire-500 transition mb-2" />
+                                    <div className="flex flex-wrap gap-1.5">
+                                        <button onClick={() => addRevenue(1000000)} className="text-[10px] bg-gray-800 hover:bg-gray-700 px-2 py-1.5 rounded text-gray-300 transition flex-1 text-center">+1L</button>
+                                        <button onClick={() => addRevenue(5000000)} className="text-[10px] bg-gray-800 hover:bg-gray-700 px-2 py-1.5 rounded text-gray-300 transition flex-1 text-center">+5L</button>
+                                        <button onClick={() => addRevenue(10000000)} className="text-[10px] bg-gray-800 hover:bg-gray-700 px-2 py-1.5 rounded text-gold-400 transition flex-1 text-center">+10L</button>
+                                        <button onClick={() => setRevenueInput("")} className="text-[10px] bg-red-900/50 hover:bg-red-900 px-2 py-1.5 rounded text-red-300 transition flex-1 text-center">Reset</button>
                                     </div>
-                                    
-                                    <div>
-                                        <div className="flex justify-between items-end mb-2">
-                                            <label className="block text-gray-400 text-xs font-bold uppercase tracking-widest">Total Plot Value (₹)</label>
-                                            <span className="text-xs text-white font-bold">{formatINR(revenue)}</span>
-                                        </div>
-                                        <input type="text" value={revenueInput} onChange={handleRevenueChange} placeholder="e.g., 5000000" className="w-full bg-black/50 border border-gray-700 rounded-xl text-xl font-display font-bold text-white p-4 h-14 focus:outline-none focus:border-fire-500 transition mb-3" />
-                                        
-                                        <div className="grid grid-cols-4 gap-2">
-                                            <button onClick={() => addRevenue(100000)} className="bg-gray-800 hover:bg-gray-700 py-2.5 rounded-lg text-gray-300 transition text-xs font-bold">+1L</button>
-                                            <button onClick={() => addRevenue(500000)} className="bg-gray-800 hover:bg-gray-700 py-2.5 rounded-lg text-gray-300 transition text-xs font-bold">+5L</button>
-                                            <button onClick={() => addRevenue(1000000)} className="bg-gray-800 hover:bg-gray-700 py-2.5 rounded-lg text-gold-400 transition text-xs font-bold">+10L</button>
-                                            <button onClick={() => setRevenueInput("")} className="bg-red-900/30 hover:bg-red-900/50 py-2.5 rounded-lg text-red-400 transition text-xs font-bold">Reset</button>
-                                        </div>
+                                    <div className="mt-2 text-right text-xs text-gray-400 font-medium">
+                                        Value: <span className="text-white font-bold">{formatINR(revenue)}</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         {/* RIGHT COLUMN */}
-                        <div className="lg:col-span-7 flex flex-col gap-6">
-                            <div className="card-glass rounded-3xl p-6 flex flex-col h-full">
-                                <div className="flex justify-between items-center mb-6 border-b border-gray-800 pb-4">
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 rounded-full bg-gold-500/20 flex items-center justify-center">
-                                            <i className="fa-solid fa-trophy text-gold-500"></i>
-                                        </div>
-                                        <h3 className="font-display text-2xl font-bold text-white uppercase">
-                                            BONANZA
-                                        </h3>
-                                    </div>
-                                    <i className="fa-solid fa-fire text-fire-500 text-2xl animate-pulse-fast"></i>
+                        <div className="lg:col-span-7 flex flex-col gap-4">
+                            <div className="card-glass rounded-2xl p-4 sm:p-5">
+                                <div className="flex justify-between items-center mb-4 border-b border-gray-800 pb-2">
+                                    <h3 className="font-display text-xl font-bold text-white uppercase flex items-center gap-2">
+                                        <i className="fa-solid fa-trophy text-gold-500"></i> BONANZA
+                                    </h3>
+                                    <i className="fa-solid fa-fire text-fire-500 text-xl"></i>
                                 </div>
-                                
-                                {/* Status Area */}
                                 {currentTier ? (
-                                    <div className="bg-gradient-to-r from-fire-600 to-gold-500 rounded-2xl p-6 mb-6 text-center transform hover:scale-[1.02] transition shadow-[0_0_30px_rgba(255,78,0,0.3)]">
-                                        <span className="inline-block bg-black/30 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest text-white mb-2">🔥 UNLOCKED</span>
-                                        <h4 className="font-display text-3xl md:text-4xl font-black text-white">{currentTier.prize}</h4>
+                                    <div className="bg-gradient-to-r from-fire-600 to-gold-500 rounded-xl p-3 mb-4 text-center transform hover:scale-[1.02] transition shadow-[0_0_30px_rgba(255,78,0,0.3)]">
+                                        <p className="text-[10px] font-bold uppercase tracking-wider text-white/80">🔥 UNLOCKED</p>
+                                        <h4 className="font-display text-xl md:text-2xl font-black text-white">{currentTier.prize}</h4>
                                     </div>
                                 ) : (
-                                    <div className="bg-gray-800/40 rounded-2xl p-6 mb-6 text-center border border-gray-700/50">
-                                        <p className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-1">STATUS</p>
-                                        <h4 className="font-display text-2xl font-bold text-white">No Reward Yet. Keep Pushing!</h4>
+                                    <div className="bg-gray-800/50 rounded-xl p-3 mb-4 text-center border border-gray-700">
+                                        <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400">STATUS</p>
+                                        <h4 className="font-display text-lg font-bold text-white">No Reward Yet. Go!</h4>
                                     </div>
                                 )}
-                                
-                                {/* Next Target */}
                                 {nextTier && (
-                                    <div className="mb-6">
-                                        <h4 className="text-gray-400 font-bold uppercase text-xs mb-3 tracking-widest flex items-center gap-2">
-                                            <i className="fa-solid fa-crosshairs text-fire-500"></i> NEXT: <span className="text-white">{nextTier.name}</span>
-                                        </h4>
-                                        <div className="grid grid-cols-2 gap-4">
-                                            <div className="bg-black/40 p-4 rounded-xl border border-gray-700/50">
-                                                <p className="text-[10px] text-gray-500 uppercase font-bold tracking-wider mb-1">Allotments</p>
-                                                <div className="flex items-end justify-between">
-                                                    <p className={`font-display font-bold text-2xl ${allotments >= nextTier.allotments ? 'text-green-400' : 'text-white'}`}>{allotments} <span className="text-base text-gray-600">/ {nextTier.allotments}</span></p>
-                                                    {allotments >= nextTier.allotments && <i className="fa-solid fa-check-circle text-green-400 text-lg"></i>}
-                                                </div>
+                                    <div className="mb-4">
+                                        <h4 className="text-gray-400 font-bold uppercase text-xs mb-2">NEXT: <span className="text-white">{nextTier.name}</span></h4>
+                                        <div className="grid grid-cols-2 gap-2 mb-2">
+                                            <div className="bg-black/50 p-2 rounded-lg border border-gray-700">
+                                                <p className="text-[9px] text-gray-500 uppercase">Allotments</p>
+                                                <p className={`font-display font-bold text-lg ${allotments >= nextTier.allotments ? 'text-green-400' : 'text-white'}`}>{allotments}/{nextTier.allotments}</p>
                                             </div>
-                                            <div className="bg-black/40 p-4 rounded-xl border border-gray-700/50">
-                                                <p className="text-[10px] text-gray-500 uppercase font-bold tracking-wider mb-1">Revenue</p>
-                                                <div className="flex items-end justify-between">
-                                                    <p className={`font-display font-bold text-2xl ${revenue >= nextTier.revReq ? 'text-green-400' : 'text-white'}`}>{revenue >= nextTier.revReq ? "Ready" : nextTier.revText || "-"}</p>
-                                                    {revenue >= nextTier.revReq && <i className="fa-solid fa-check-circle text-green-400 text-lg"></i>}
-                                                </div>
+                                            <div className="bg-black/50 p-2 rounded-lg border border-gray-700">
+                                                <p className="text-[9px] text-gray-500 uppercase">Revenue</p>
+                                                <p className={`font-display font-bold text-lg ${revenue >= nextTier.revReq ? 'text-green-400' : 'text-white'}`}>{revenue >= nextTier.revReq ? "✅" : nextTier.revText || "-"}</p>
                                             </div>
                                         </div>
                                     </div>
                                 )}
-                                
-                                {/* Rewards List */}
-                                <div className="space-y-3 overflow-y-auto pr-2 flex-1 min-h-[250px]">
+                                <div className="space-y-2 max-h-[220px] overflow-y-auto pr-1">
                                     {BONANZA_TIERS.map((tier) => {
                                         const isUnlocked = currentTier && tier.id <= currentTier.id;
                                         const isNext = nextTier && tier.id === nextTier.id;
-                                        let bgClass = "bg-black/30 border-gray-800/50";
-                                        let textClass = "text-gray-500";
+                                        let bgClass = "bg-black/40 border-gray-800";
+                                        let textClass = "text-gray-400";
                                         let icon = <i className="fa-solid fa-lock text-gray-600"></i>;
-                                        
-                                        if (isUnlocked) { 
-                                            bgClass = "bg-green-900/10 border-green-500/20"; 
-                                            textClass = "text-green-400"; 
-                                            icon = <div className="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center"><i className="fa-solid fa-check text-green-400"></i></div>; 
-                                        } 
-                                        else if (isNext) { 
-                                            bgClass = "bg-fire-900/10 border-fire-500/30"; 
-                                            textClass = "text-white"; 
-                                            icon = <div className="w-8 h-8 rounded-full bg-fire-500/20 flex items-center justify-center"><i className="fa-solid fa-crosshairs text-fire-500 animate-pulse-fast"></i></div>; 
-                                        }
-                                        
+                                        if (isUnlocked) { bgClass = "bg-green-900/20 border-green-500/30"; textClass = "text-green-400"; icon = <i className="fa-solid fa-check-circle text-green-400"></i>; } 
+                                        else if (isNext) { bgClass = "bg-fire-900/20 border-fire-500/50"; textClass = "text-white"; icon = <i className="fa-solid fa-crosshairs text-fire-500 animate-pulse-fast"></i>; }
                                         return (
-                                            <div key={tier.id} className={`flex items-center justify-between p-3 sm:p-4 rounded-xl border ${bgClass} transition-all duration-300 hover:bg-white/5`}>
-                                                <div className="flex items-center gap-4">
-                                                    <div className="w-8 flex justify-center">{icon}</div>
+                                            <div key={tier.id} className={`flex items-center justify-between p-2 rounded-lg border ${bgClass} transition-all`}>
+                                                <div className="flex items-center gap-3">
+                                                    <div className="w-5 text-center">{icon}</div>
                                                     <div>
-                                                        <div className={`font-bold text-sm sm:text-base mb-0.5 ${textClass}`}>{tier.prize}</div>
-                                                        <div className="text-[10px] text-gray-500 font-medium uppercase tracking-wider">{tier.allotments} allot + {tier.revReq > 0 ? tier.revText : 'start'}</div>
+                                                        <div className={`font-bold text-sm ${textClass}`}>{tier.prize}</div>
+                                                        <div className="text-[9px] text-gray-500">{tier.allotments} allot + {tier.revReq > 0 ? tier.revText : 'start'}</div>
                                                     </div>
                                                 </div>
                                             </div>
                                         );
                                     })}
+                                    <p className="text-[8px] text-gray-500 mt-1 text-center">*25% paid to qualify</p>
                                 </div>
-                                <p className="text-[10px] text-gray-500 mt-4 text-center uppercase tracking-widest font-bold">*25% paid to qualify</p>
                             </div>
                         </div>
                     </div>
 
                     {/* PROJECTS */}
-                    <div className="mt-8">
-                        <div className="card-glass rounded-3xl p-6">
-                            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 border-b border-gray-800 pb-4 gap-4">
-                                <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center">
-                                        <i className="fa-solid fa-map-location-dot text-blue-500"></i>
-                                    </div>
-                                    <h3 className="font-display text-2xl font-bold text-white uppercase">
-                                        PROJECTS
-                                    </h3>
-                                </div>
-                                
-                                <div className="flex overflow-x-auto hide-scrollbar gap-2 w-full sm:w-auto pb-1">
-                                    {FILTER_TABS.map(tab => (
-                                        <button key={tab.value} onClick={() => setActiveFilter(tab.value)} className={`px-4 py-2 rounded-full text-xs font-bold uppercase transition-all whitespace-nowrap flex-shrink-0 ${activeFilter === tab.value ? 'bg-fire-600 text-white shadow-[0_0_15px_rgba(227,60,0,0.4)]' : 'bg-gray-800/80 text-gray-400 hover:bg-gray-700 hover:text-white'}`}>
-                                            {tab.label}
-                                        </button>
-                                    ))}
-                                </div>
+                    <div className="max-w-7xl mx-auto mt-6">
+                        <div className="card-glass rounded-2xl p-3 sm:p-5">
+                            <h3 className="font-display text-xl font-bold mb-3 text-white uppercase border-b border-gray-800 pb-2 flex items-center gap-2">
+                                <i className="fa-solid fa-map-location-dot text-fire-500"></i> PROJECTS                            </h3>
+                            <div className="flex overflow-x-auto hide-scrollbar gap-1.5 mb-4 pb-1 -mx-1 px-1 sm:mx-0 sm:px-0">
+                                {FILTER_TABS.map(tab => (
+                                    <button key={tab.value} onClick={() => setActiveFilter(tab.value)} className={`px-3 py-1.5 rounded-full text-[9px] sm:text-xs font-bold uppercase transition-all whitespace-nowrap flex-shrink-0 ${activeFilter === tab.value ? 'bg-fire-600 text-white shadow-[0_0_15px_rgba(227,60,0,0.4)]' : 'bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white'}`}>
+                                        {tab.label}
+                                    </button>
+                                ))}
                             </div>
-                            
-                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3">
                                 {filteredProjects.map(proj => (
-                                    <div key={proj.id} className="bg-black/40 border border-gray-800 rounded-2xl p-5 hover:border-gray-500 hover:bg-black/60 transition-all duration-300 relative overflow-hidden flex flex-col justify-between group">
+                                    <div key={proj.id} className="bg-black/60 border border-gray-800 rounded-xl p-3 hover:border-gray-500 transition relative overflow-hidden flex flex-col justify-between">
                                         <div>
-                                            <div className="inline-block bg-gray-800 text-[9px] font-bold px-2 py-1 rounded mb-3 text-gray-300 uppercase tracking-wider">{proj.category}</div>
-                                            <h4 className="font-display font-bold text-lg text-white mb-2 leading-tight group-hover:text-fire-400 transition-colors">{proj.name}</h4>
-                                            <p className="text-gray-400 text-sm mb-4 flex items-center gap-2"><i className="fa-solid fa-location-dot text-red-500"></i> {proj.location}</p>
+                                            <div className="absolute top-0 right-0 bg-gray-800 text-[8px] font-bold px-2 py-0.5 rounded-bl-lg text-gray-300 uppercase">{proj.category}</div>
+                                            <h4 className="font-display font-bold text-sm sm:text-base text-white mb-0.5 pr-12 leading-tight">{proj.name}</h4>
+                                            <p className="text-gray-400 text-xs mb-2"><i className="fa-solid fa-location-dot text-red-500 mr-1"></i> {proj.location}</p>
                                         </div>
-                                        <div>
-                                            <div className="flex justify-between items-end mb-4 pt-4 border-t border-gray-800/50">
-                                                <div>
-                                                    <div className="text-[10px] text-gray-500 uppercase tracking-wider font-bold mb-1">Starting</div>
-                                                    <div className="font-bold text-gold-400 text-xl leading-none">{proj.price}</div>
-                                                </div>
+                                        <div className="flex flex-col sm:flex-row justify-between sm:items-end gap-2">
+                                            <div>
+                                                <div className="text-[8px] text-gray-500 uppercase">Starting</div>
+                                                <div className="font-bold text-gold-400 text-base leading-none">{proj.price}</div>
                                             </div>
-                                            <div className="flex gap-1.5 flex-wrap">
-                                                {proj.tags.map((tag, i) => <span key={i} className="bg-gray-800/80 text-gray-300 text-[9px] px-2 py-1 rounded font-medium uppercase tracking-wider">{tag}</span>)}
+                                            <div className="flex gap-1 flex-wrap">
+                                                {proj.tags.map((tag, i) => <span key={i} className="bg-gray-800 text-gray-300 text-[7px] sm:text-[8px] px-1.5 py-0.5 rounded whitespace-nowrap">{tag}</span>)}
                                             </div>
                                         </div>
                                     </div>
@@ -539,8 +478,8 @@
                         </div>
                     </div>
 
-                    <div className="text-center text-[10px] text-gray-500 mt-12 mb-4 uppercase tracking-[0.3em] font-bold">
-                        <i className="fa-solid fa-fire text-fire-500 mr-2"></i> RISE UP · 90 DAYS · DOMINATE <i className="fa-solid fa-fire text-fire-500 ml-2"></i>
+                    <div className="text-center text-[8px] text-gray-500 mt-6 uppercase tracking-[0.2em] font-bold">
+                        <i className="fa-solid fa-fire text-fire-500 mr-1"></i> RISE UP · 90 DAYS · DOMINATE <i className="fa-solid fa-fire text-fire-500 ml-1"></i>
                     </div>
                 </div>
             );
