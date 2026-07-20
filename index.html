@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Rise Up 90 • Money Dashboard</title>
     
     <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=SF+Pro+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
 
     <script>
@@ -17,87 +17,149 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        display: ['Oswald', 'sans-serif'],
+                        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+                        display: ['SF Pro Display', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
                     },
                     colors: {
-                        fire: { 500: '#ff4e00', 600: '#e33c00', 700: '#c42b00' },
-                        gold: { 400: '#ffd700', 500: '#f5c518' }
+                        brand: { 500: '#ff3b30', 600: '#d70015' }, // Apple red-like for accents
+                        gold: { 400: '#ffd60a', 500: '#ff9f0a' }
                     },
                     animation: {
-                        'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
                     }
                 }
             }
         }
     </script>
+    
     <style>
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-highlight: rgba(255, 255, 255, 0.2);
+            --text-main: #f5f5f7;
+            --text-muted: #86868b;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
-            background: #0a0500;
-            color: #fff;
+            background-color: #000;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(255, 59, 48, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 85% 30%, rgba(255, 214, 10, 0.05) 0%, transparent 50%);
+            background-attachment: fixed;
+            color: var(--text-main);
             font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
             overflow-x: hidden;
             min-height: 100vh;
         }
-        /* clean gradient background – no blur balls, no flames */
-        .bg-gradient-clean {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            background: radial-gradient(circle at 30% 40%, #1f0a00 0%, #080200 80%);
-            pointer-events: none;
+
+        /* Apple-style Water Glass Effect */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            box-shadow: 
+                0 4px 24px -1px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        /* MONEY ICONS – interactive, mouse-following */
-        .money-icon {
-            position: fixed;
-            font-size: 1.6rem;
-            color: #ffd700;
-            text-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
-            pointer-events: none;
-            z-index: 2;
-            transition: transform 0.15s ease, opacity 0.3s ease;
-            will-change: transform, left, top;
-            opacity: 0.7;
-            filter: drop-shadow(0 0 6px rgba(255, 200, 0, 0.3));
+
+        .glass-panel:hover {
+            border-color: var(--glass-highlight);
+            box-shadow: 
+                0 8px 32px -1px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
         }
-        .money-icon:hover {
-            opacity: 1;
-            transform: scale(1.2) !important;
+
+        .glass-input {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: white;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.2s ease;
         }
-        /* card styling */
-        .card-glass {
-            background: rgba(15, 10, 8, 0.75);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 78, 0, 0.2);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255, 120, 0, 0.08);
+        
+        .glass-input:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(0, 0, 0, 0.4);
+            box-shadow: 0 0 0 4px rgba(255, 59, 48, 0.15);
         }
-        .card-glass-light {
-            background: rgba(25, 18, 14, 0.7);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
-            border: 1px solid rgba(255, 215, 0, 0.1);
+
+        .glass-button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 12px;
+            transition: all 0.2s ease;
         }
+
+        .glass-button:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .glass-button:active {
+            transform: scale(0.98);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .glass-button.active {
+            background: var(--text-main);
+            color: black;
+            border-color: transparent;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-family: 'SF Pro Display', sans-serif;
+            letter-spacing: -0.02em;
+        }
+
         .text-gradient {
-            background: linear-gradient(135deg, #ff4e00, #f5c518, #ff4e00);
-            background-size: 200% 200%;
+            background: linear-gradient(135deg, #fff 0%, #a1a1a6 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: shimmer 4s ease infinite;
         }
-        @keyframes shimmer {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        
+        .text-gradient-brand {
+            background: linear-gradient(135deg, #ff3b30 0%, #ff9f0a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
+
+        /* Utilities */
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        ::-webkit-scrollbar { width: 3px; height: 3px; }
-        ::-webkit-scrollbar-track { background: #1a0a05; }
-        ::-webkit-scrollbar-thumb { background: #ff4e00; border-radius: 8px; }
-        * { -webkit-tap-highlight-color: transparent; }
-        button, input { touch-action: manipulation; }
+        
+        /* Subtle grid background */
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            pointer-events: none;
+            mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+            -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+        }
     </style>
 </head>
 <body>
@@ -106,40 +168,31 @@
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
 
-        // DATA
         const BONANZA_TIERS = [
             { id: 1, name: "Vietnam Trip", allotments: 2, revReq: 0, revText: "-", prize: "Vietnam Trip (Oct 2nd Wk)" },
-            { id: 2, name: "Gold + Vietnam", allotments: 3, revReq: 5000000, revText: "50 Lakhs", prize: "8g Gold + Vietnam" },
-            { id: 3, name: "China + iPhone", allotments: 5, revReq: 10000000, revText: "1 Crore", prize: "China + iPhone 17 Pro Max" },
-            { id: 4, name: "Car Down Payment", allotments: 10, revReq: 15000000, revText: "1.5 Crore", prize: "China + 4.5L Car DP" },
-            { id: 5, name: "House + Car", allotments: 15, revReq: 20000000, revText: "2 Crore", prize: "China + 14L House + 4L Car DP" },
-            { id: 6, name: "Ultimate Bonanza", allotments: 20, revReq: 25000000, revText: "2.5 Crore", prize: "China + 24L House + 5L Car DP" },
+            { id: 2, name: "Gold + Vietnam", allotments: 3, revReq: 5000000, revText: "50L", prize: "8g Gold + Vietnam" },
+            { id: 3, name: "China + iPhone", allotments: 5, revReq: 10000000, revText: "1Cr", prize: "China + iPhone 17 Pro Max" },
+            { id: 4, name: "Car Down Payment", allotments: 10, revReq: 15000000, revText: "1.5Cr", prize: "China + 4.5L Car DP" },
+            { id: 5, name: "House + Car", allotments: 15, revReq: 20000000, revText: "2Cr", prize: "China + 14L House + 4L Car DP" },
+            { id: 6, name: "Ultimate Bonanza", allotments: 20, revReq: 25000000, revText: "2.5Cr", prize: "China + 24L House + 5L Car DP" },
         ];
 
         const PROJECTS = [
-            { id: 'p1', region: 'Shadnagar', category: 'Premium / Wellness', name: "Golden Heights Health Village", location: "Balanagar", price: "₹19,999", sizes: "150-400 Sq.Yd", tags: ["MUDA", "75 Acres", "51+ Amenities"] },
-            { id: 'p2', region: 'Shadnagar', category: 'Standard', name: "Iconic 2, 3, 4, 5", location: "Shadnagar", price: "₹18,399", sizes: "Var.", tags: ["HMDA/DTCP"] },
-            { id: 'p3', region: 'Shadnagar', category: 'Budget', name: "Spring City", location: "Shadnagar", price: "₹10,599", sizes: "Var.", tags: ["HMDA/DTCP"] },
-            { id: 'p4', region: 'Shadnagar', category: 'Standard', name: "Paradise 2", location: "Shadnagar", price: "₹17,399", sizes: "Var.", tags: ["HMDA/DTCP"] },
-            { id: 'p5', region: 'Shadnagar', category: 'Premium', name: "Iconic 6 & 7", location: "Bengaluru Hwy", price: "₹24,999", sizes: "Var.", tags: ["Highway Facing"] },
-            { id: 'p6', region: 'Shadnagar', category: 'Premium', name: "Iconic 9", location: "Burgula", price: "₹19,999", sizes: "Var.", tags: ["HMDA"] },
-            { id: 'p7', region: 'Shadnagar', category: 'Premium Farm', name: "Dream Valley 2", location: "Kamsanpally", price: "₹10.16L", sizes: "Per Gunta", tags: ["Resort Mem.", "Farm Plots"] },
-            { id: 'p8', region: 'Shadnagar', category: 'Premium Farm', name: "Dream Valley 3", location: "Nagulapally", price: "₹15.48L", sizes: "Per Gunta", tags: ["Resort Mem.", "Farm Plots"] },
-            { id: 'p9', region: 'Shadnagar', category: 'Value', name: "Golden Heights @ Rajapur", location: "Rajapur (NH44)", price: "Contact", sizes: "Var.", tags: ["MUDA", "Spot Reg."] },
-            { id: 'p10', region: 'Mumbai', category: 'Mega Project', name: "Golden Heights Smart County", location: "Budhera, Patloor", price: "₹10,499", sizes: "Var.", tags: ["DTCP", "65 Acres", "EMI Avail"] },
-            { id: 'p11', region: 'Mumbai', category: 'Mega Project', name: "Golden Heights @ Sadasivapet", location: "Sadasivapet", price: "₹10,499", sizes: "Var.", tags: ["DTCP", "Same as Smart County"] },
-            { id: 'p12', region: 'Warangal', category: 'Standard', name: "RK Enclave", location: "Ghatkesar", price: "₹18,899", sizes: "Var.", tags: ["HMDA", "Near AIIMS"] },
-            { id: 'p13', region: 'Warangal', category: 'Value', name: "Rayan Enclave", location: "Bibinagar", price: "₹13,399", sizes: "Var.", tags: ["HMDA", "Warangal Hwy"] },
-            { id: 'p14', region: 'Warangal', category: 'Value', name: "Aabharana", location: "Yadadri", price: "₹11,499", sizes: "110-165 Sq.Yd", tags: ["DTCP", "EMI Available"] },
-            { id: 'p15', region: 'Vijayawada', category: 'Premium', name: "Prakriti Hill Township", location: "Piglipur", price: "₹22,999", sizes: "Var.", tags: ["Residential"] },
-            { id: 'p16', region: 'Vijayawada', category: 'Premium', name: "Medha County", location: "Koheda (East)", price: "₹20,999", sizes: "Var.", tags: ["HMDA"] },
+            { id: 'p1', region: 'Shadnagar', category: 'Premium', name: "Golden Heights Health Village", location: "Balanagar", price: "₹19,999", tags: ["MUDA", "75 Acres"] },
+            { id: 'p2', region: 'Shadnagar', category: 'Standard', name: "Iconic 2, 3, 4, 5", location: "Shadnagar", price: "₹18,399", tags: ["HMDA/DTCP"] },
+            { id: 'p3', region: 'Shadnagar', category: 'Budget', name: "Spring City", location: "Shadnagar", price: "₹10,599", tags: ["HMDA/DTCP"] },
+            { id: 'p4', region: 'Shadnagar', category: 'Standard', name: "Paradise 2", location: "Shadnagar", price: "₹17,399", tags: ["HMDA/DTCP"] },
+            { id: 'p5', region: 'Shadnagar', category: 'Premium', name: "Iconic 6 & 7", location: "Bengaluru Hwy", price: "₹24,999", tags: ["Highway Facing"] },
+            { id: 'p10', region: 'Mumbai', category: 'Mega', name: "Golden Heights Smart County", location: "Budhera", price: "₹10,499", tags: ["DTCP", "65 Acres"] },
+            { id: 'p12', region: 'Warangal', category: 'Standard', name: "RK Enclave", location: "Ghatkesar", price: "₹18,899", tags: ["HMDA"] },
+            { id: 'p15', region: 'Vijayawada', category: 'Premium', name: "Prakriti Hill Township", location: "Piglipur", price: "₹22,999", tags: ["Residential"] },
         ];
 
         const FILTER_TABS = [
             { label: "All", value: "All" },
             { label: "Shadnagar", value: "Shadnagar" },
-            { label: "Mumbai Hwy", value: "Mumbai" },
-            { label: "Warangal Hwy", value: "Warangal" },
+            { label: "Mumbai", value: "Mumbai" },
+            { label: "Warangal", value: "Warangal" },
             { label: "Vijayawada", value: "Vijayawada" },
         ];
 
@@ -151,60 +204,12 @@
             }).format(number);
         };
 
-        // ===== CLEAN BACKGROUND (only gradient, no flames/embers) =====
-        const CleanBackground = () => {
-            return <div className="bg-gradient-clean"></div>;
-        };
-
-        // ===== MONEY ICONS (mouse-following) =====
-        const MoneyIcons = () => {
-            const [mouse, setMouse] = useState({ x: 0, y: 0 });
-            const icons = ['fa-solid fa-coins', 'fa-solid fa-sack-dollar', 'fa-solid fa-money-bill-wave', 'fa-solid fa-dollar-sign', 'fa-solid fa-bolt'];
-
-            useEffect(() => {
-                const handleMove = (e) => {
-                    setMouse({ x: e.clientX, y: e.clientY });
-                };
-                window.addEventListener('mousemove', handleMove);
-                return () => window.removeEventListener('mousemove', handleMove);
-            }, []);
-
-            return (
-                <>
-                    {icons.map((icon, idx) => {
-                        const angle = (idx / icons.length) * Math.PI * 2;
-                        const radius = 60 + Math.sin(Date.now() / 1000 + idx) * 15;
-                        const x = mouse.x + Math.cos(angle + Date.now() / 2000) * radius;
-                        const y = mouse.y + Math.sin(angle + Date.now() / 2000) * radius;
-                        return (
-                            <i
-                                key={idx}
-                                className={`${icon} money-icon`}
-                                style={{
-                                    left: x - 20,
-                                    top: y - 20,
-                                    transform: `scale(${0.8 + Math.sin(Date.now() / 1000 + idx) * 0.15}) rotate(${Math.sin(Date.now() / 1500 + idx) * 15}deg)`,
-                                    fontSize: `${1.4 + Math.sin(Date.now() / 1200 + idx) * 0.4}rem`,
-                                    opacity: 0.5 + Math.sin(Date.now() / 800 + idx) * 0.25,
-                                    transition: 'left 0.1s ease-out, top 0.1s ease-out',
-                                    zIndex: 3,
-                                }}
-                            />
-                        );
-                    })}
-                </>
-            );
-        };
-
-        // ===== MAIN APP =====
         const App = () => {
             const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
             const [allotments, setAllotments] = useState(0);
             const [revenueInput, setRevenueInput] = useState("");
             const [activeFilter, setActiveFilter] = useState("All");
             const [entered, setEntered] = useState(false);
-            const [isMuted, setIsMuted] = useState(false);
-            const audioRef = useRef(null);
             
             const revenue = parseFloat(revenueInput.replace(/,/g, '')) || 0;
             const commission = revenue * 0.19;
@@ -229,14 +234,6 @@
                 }, 1000);
                 return () => clearInterval(interval);
             }, []);
-
-            useEffect(() => {
-                if (entered && audioRef.current) {
-                    audioRef.current.volume = 0.4;
-                    audioRef.current.loop = true;
-                    audioRef.current.play().catch(e => console.log("autoplay blocked"));
-                }
-            }, [entered]);
 
             const getCurrentTier = () => {
                 let highest = null;
@@ -265,221 +262,264 @@
                 setRevenueInput((revenue + amount).toString());
             };
 
-            const handleEnter = () => {
-                setEntered(true);
-                if (audioRef.current) {
-                    audioRef.current.volume = 0.4;
-                    audioRef.current.loop = true;
-                    audioRef.current.play().catch(e => console.log("play failed", e));
-                }
-            };
-            const toggleMute = () => {
-                if (audioRef.current) {
-                    audioRef.current.muted = !isMuted;
-                    setIsMuted(!isMuted);
-                }
-            };
-
-            // ENTRANCE
             if (!entered) {
                 return (
-                    <div className="min-h-screen flex items-center justify-center bg-black p-4 relative overflow-hidden">
-                        <CleanBackground />
-                        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/70 z-0"></div>
-                        <div className="text-center z-10 card-glass p-6 sm:p-8 md:p-12 rounded-3xl max-w-2xl border-fire-500/40 border shadow-[0_0_60px_rgba(255,78,0,0.25)] w-full mx-4">
-                            <i className="fa-solid fa-fire-flame-curved text-6xl md:text-7xl text-fire-500 mb-4 animate-pulse-fast"></i>
-                            <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-black mb-2 uppercase text-gradient drop-shadow-lg leading-tight">Rise Up 90</h1>
-                            <p className="text-gray-300 text-sm sm:text-lg mb-8 uppercase tracking-[0.2em] font-semibold">IGNITE THE HUSTLE</p>
-                            <button onClick={handleEnter} className="bg-gradient-to-r from-fire-600 to-gold-500 hover:from-fire-500 hover:to-gold-400 text-white font-display font-black text-xl py-4 px-10 rounded-full shadow-[0_0_40px_rgba(255,78,0,0.5)] hover:shadow-[0_0_60px_rgba(245,197,24,0.5)] transform hover:scale-105 transition-all uppercase tracking-wider w-full sm:w-auto">
-                                <i className="fa-solid fa-play mr-2"></i> ENTER THE FIRE
+                    <div className="min-h-screen flex items-center justify-center p-6 relative">
+                        <div className="bg-grid"></div>
+                        <div className="glass-panel p-10 md:p-16 rounded-[2rem] max-w-lg w-full text-center flex flex-col items-center animate-float">
+                            <div className="w-20 h-20 bg-brand-500/20 rounded-full flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(255,59,48,0.3)]">
+                                <i className="fa-solid fa-arrow-trend-up text-3xl text-brand-500"></i>
+                            </div>
+                            <h1 className="text-4xl md:text-5xl font-semibold mb-2 text-gradient">Rise Up 90</h1>
+                            <p className="text-[var(--text-muted)] text-sm uppercase tracking-widest font-medium mb-10">Ignite The Hustle</p>
+                            
+                            <button 
+                                onClick={() => setEntered(true)} 
+                                className="w-full bg-white text-black font-semibold py-4 px-8 rounded-full text-lg hover:bg-gray-200 transition-colors shadow-lg flex items-center justify-center gap-2"
+                            >
+                                Enter Dashboard <i className="fa-solid fa-arrow-right text-sm"></i>
                             </button>
-                            <p className="text-[10px] text-gray-500 mt-6 font-bold tracking-widest uppercase"><i className="fa-solid fa-volume-high mr-1 text-fire-500"></i> audio experience</p>
                         </div>
                     </div>
                 );
             }
 
             return (
-                <div className="min-h-screen p-3 sm:p-4 md:p-6 font-sans pb-24 relative">
-                    <CleanBackground />
-                    <MoneyIcons />
-                    
-                    <audio ref={audioRef} src="https://ronianurag.github.io/90-DAYS/passo.mp3" preload="auto" />
+                <div className="min-h-screen p-4 md:p-8 relative max-w-6xl mx-auto">
+                    <div className="bg-grid"></div>
 
-                    <button onClick={toggleMute} className="fixed top-3 right-3 z-50 card-glass p-2.5 rounded-full text-white hover:text-fire-500 border border-gray-700 transition-colors shadow-lg backdrop-blur-md">
-                        {isMuted ? <i className="fa-solid fa-volume-xmark text-lg w-5 text-center"></i> : <i className="fa-solid fa-volume-high text-lg w-5 text-center text-fire-500"></i>}
-                    </button>
+                    {/* Header Section */}
+                    <header className="flex flex-col md:flex-row justify-between items-center mb-8 gap-6 mt-4">
+                        <div>
+                            <h1 className="text-3xl md:text-4xl font-bold text-gradient-brand">Rise Up 90</h1>
+                            <p className="text-[var(--text-muted)] text-xs uppercase tracking-widest font-medium mt-1">90 Days to Dominate</p>
+                        </div>
 
-                    {/* Header */}
-                    <div className="text-center mb-5 mt-14 sm:mt-4 px-2">
-                        <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-black mb-0 tracking-tight uppercase text-gradient leading-tight">Rise Up 90</h1>
-                        <p className="text-gray-400 text-xs sm:text-sm md:text-base font-semibold tracking-[0.2em] uppercase mt-1">
-                            <i className="fa-solid fa-fire text-fire-500 mr-1"></i> HUSTLE · DOMINATE · REPEAT
-                        </p>
-                    </div>
+                        {/* Timer Glass Panel */}
+                        <div className="glass-panel px-6 py-3 flex gap-4 md:gap-8 items-center">
+                            {[
+                                { label: 'Days', value: timeLeft.days },
+                                { label: 'Hours', value: timeLeft.hours },
+                                { label: 'Mins', value: timeLeft.minutes },
+                                { label: 'Secs', value: timeLeft.seconds }
+                            ].map((time, idx) => (
+                                <div key={idx} className="flex flex-col items-center">
+                                    <span className="font-display text-2xl md:text-3xl font-medium tracking-tight text-white">
+                                        {time.value.toString().padStart(2, '0')}
+                                    </span>
+                                    <span className="text-[10px] text-[var(--text-muted)] uppercase font-semibold tracking-wider">{time.label}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </header>
 
-                    {/* Timer */}
-                    <div className="flex justify-center gap-2 sm:gap-4 mb-8 flex-wrap">
-                        {[
-                            { label: 'Days', value: timeLeft.days },
-                            { label: 'Hours', value: timeLeft.hours },
-                            { label: 'Mins', value: timeLeft.minutes },
-                            { label: 'Secs', value: timeLeft.seconds }
-                        ].map((time, idx) => (
-                            <div key={idx} className="card-glass rounded-xl p-2 sm:p-3 w-16 sm:w-20 md:w-28 flex flex-col items-center justify-center border-t-2 border-t-fire-500 shadow-[inset_0_0_20px_rgba(255,78,0,0.1)]">
-                                <span className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-0.5">
-                                    {time.value.toString().padStart(2, '0')}
-                                </span>
-                                <span className="text-[8px] sm:text-xs text-gray-400 uppercase font-bold tracking-wider">{time.label}</span>
-                            </div>
-                        ))}
-                    </div>
-
-                    <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-6">
-                        {/* LEFT COLUMN */}
-                        <div className="lg:col-span-5 flex flex-col gap-4">
-                            <div className="card-glass rounded-2xl p-4 sm:p-5 relative overflow-hidden">
-                                <div className="absolute inset-0 bg-gradient-to-r from-green-900/30 to-emerald-900/20"></div>
-                                <div className="relative z-10 text-center">
-                                    <h2 className="text-gray-300 uppercase tracking-widest text-[10px] sm:text-xs font-bold mb-1">
-                                        <i className="fa-solid fa-coins text-green-400 mr-1"></i> YOUR 19% COMMISSION
-                                    </h2>
-                                    <div className="font-display text-3xl sm:text-4xl md:text-5xl font-black text-green-400 break-words drop-shadow-[0_0_20px_rgba(74,222,128,0.3)]">
-                                        {formatINR(commission)}
-                                    </div>
-                                    {commission > 0 && (
-                                        <div className="mt-1 text-green-300 text-xs font-bold animate-pulse">⚡ FUEL THE FIRE ⚡</div>
-                                    )}
+                    {}
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-6">
+                        
+                        {/* Left Column: Progress & Commission */}
+                        <div className="lg:col-span-5 flex flex-col gap-6">
+                            
+                            {/* Commission Card */}
+                            <div className="glass-panel p-6 relative overflow-hidden group">
+                                <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                                    <i className="fa-solid fa-wallet text-6xl text-green-400"></i>
+                                </div>
+                                <h3 className="text-[var(--text-muted)] text-xs font-semibold uppercase tracking-wider mb-2">Estimated 19% Commission</h3>
+                                <div className="font-display text-4xl md:text-5xl font-semibold text-green-400">
+                                    {formatINR(commission)}
                                 </div>
                             </div>
 
-                            <div className="card-glass rounded-2xl p-4 sm:p-5 border-l-4 border-l-fire-500">
-                                <h3 className="font-display text-xl font-bold mb-4 text-white uppercase border-b border-gray-800 pb-2 flex items-center gap-2">
-                                    <i className="fa-solid fa-sliders text-fire-500"></i> LOG PROGRESS
-                                </h3>
-                                <div className="mb-4">
-                                    <label className="block text-gray-400 text-xs font-bold mb-1 uppercase tracking-wide">Allotments</label>
-                                    <div className="flex items-center">
-                                        <button onClick={() => setAllotments(Math.max(0, allotments - 1))} className="bg-gray-800 hover:bg-gray-700 text-white p-3 rounded-l-lg transition text-lg w-12">−</button>
-                                        <input type="number" value={allotments} onChange={(e) => setAllotments(parseInt(e.target.value) || 0)} className="w-full bg-black border-y border-gray-700 text-center text-2xl font-display font-bold text-white py-1.5 focus:outline-none" />
-                                        <button onClick={() => setAllotments(allotments + 1)} className="bg-fire-600 hover:bg-fire-500 text-white p-3 rounded-r-lg transition text-lg w-12">+</button>
+                            {/* Log Progress Card */}
+                            <div className="glass-panel p-6">
+                                <div className="flex items-center gap-2 mb-6">
+                                    <div className="w-8 h-8 rounded-full bg-brand-500/20 flex items-center justify-center">
+                                        <i className="fa-solid fa-pen text-brand-500 text-sm"></i>
                                     </div>
+                                    <h2 className="text-xl font-semibold text-white">Log Progress</h2>
                                 </div>
-                                <div>
-                                    <label className="block text-gray-400 text-xs font-bold mb-1 uppercase tracking-wide">Total Plot Value (₹)</label>
-                                    <input type="text" value={revenueInput} onChange={handleRevenueChange} placeholder="e.g., 5000000" className="w-full bg-black border border-gray-700 rounded-lg text-xl font-display font-bold text-white p-3 focus:outline-none focus:border-fire-500 transition mb-2" />
-                                    <div className="flex flex-wrap gap-1.5">
-                                        <button onClick={() => addRevenue(1000000)} className="text-[10px] bg-gray-800 hover:bg-gray-700 px-2 py-1.5 rounded text-gray-300 transition flex-1 text-center">+1L</button>
-                                        <button onClick={() => addRevenue(5000000)} className="text-[10px] bg-gray-800 hover:bg-gray-700 px-2 py-1.5 rounded text-gray-300 transition flex-1 text-center">+5L</button>
-                                        <button onClick={() => addRevenue(10000000)} className="text-[10px] bg-gray-800 hover:bg-gray-700 px-2 py-1.5 rounded text-gold-400 transition flex-1 text-center">+10L</button>
-                                        <button onClick={() => setRevenueInput("")} className="text-[10px] bg-red-900/50 hover:bg-red-900 px-2 py-1.5 rounded text-red-300 transition flex-1 text-center">Reset</button>
+
+                                <div className="space-y-5">
+                                    {/* Allotments Input */}
+                                    <div>
+                                        <label className="block text-[var(--text-muted)] text-xs font-medium mb-2 uppercase tracking-wide">Total Allotments</label>
+                                        <div className="flex h-12">
+                                            <button onClick={() => setAllotments(Math.max(0, allotments - 1))} className="glass-button w-12 flex items-center justify-center rounded-r-none border-r-0 text-xl">−</button>
+                                            <input 
+                                                type="number" 
+                                                value={allotments} 
+                                                onChange={(e) => setAllotments(parseInt(e.target.value) || 0)} 
+                                                className="glass-input flex-1 rounded-none text-center text-xl font-medium" 
+                                            />
+                                            <button onClick={() => setAllotments(allotments + 1)} className="glass-button w-12 flex items-center justify-center rounded-l-none border-l-0 text-xl">+</button>
+                                        </div>
                                     </div>
-                                    <div className="mt-2 text-right text-xs text-gray-400 font-medium">
-                                        Value: <span className="text-white font-bold">{formatINR(revenue)}</span>
+
+                                    {/* Revenue Input */}
+                                    <div>
+                                        <div className="flex justify-between items-end mb-2">
+                                            <label className="block text-[var(--text-muted)] text-xs font-medium uppercase tracking-wide">Total Revenue (₹)</label>
+                                            <span className="text-xs font-medium text-white">{formatINR(revenue)}</span>
+                                        </div>
+                                        <input 
+                                            type="text" 
+                                            value={revenueInput} 
+                                            onChange={handleRevenueChange} 
+                                            placeholder="e.g. 5000000" 
+                                            className="glass-input w-full h-12 px-4 text-lg font-medium mb-3" 
+                                        />
+                                        
+                                        {/* Quick Add Buttons */}
+                                        <div className="grid grid-cols-4 gap-2">
+                                            <button onClick={() => addRevenue(100000)} className="glass-button py-2 text-xs font-medium text-gray-300">+1L</button>
+                                            <button onClick={() => addRevenue(500000)} className="glass-button py-2 text-xs font-medium text-gray-300">+5L</button>
+                                            <button onClick={() => addRevenue(1000000)} className="glass-button py-2 text-xs font-medium text-brand-500">+10L</button>
+                                            <button onClick={() => setRevenueInput("")} className="glass-button py-2 text-xs font-medium text-[var(--text-muted)]">Reset</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        {/* RIGHT COLUMN */}
-                        <div className="lg:col-span-7 flex flex-col gap-4">
-                            <div className="card-glass rounded-2xl p-4 sm:p-5">
-                                <div className="flex justify-between items-center mb-4 border-b border-gray-800 pb-2">
-                                    <h3 className="font-display text-xl font-bold text-white uppercase flex items-center gap-2">
-                                        <i className="fa-solid fa-trophy text-gold-500"></i> BONANZA
-                                    </h3>
-                                    <i className="fa-solid fa-fire text-fire-500 text-xl"></i>
+                        {}
+                        <div className="lg:col-span-7">
+                            <div className="glass-panel p-6 h-full flex flex-col">
+                                <div className="flex justify-between items-center mb-6">
+                                    <div className="flex items-center gap-2">
+                                        <div className="w-8 h-8 rounded-full bg-gold-500/20 flex items-center justify-center">
+                                            <i className="fa-solid fa-trophy text-gold-500 text-sm"></i>
+                                        </div>
+                                        <h2 className="text-xl font-semibold text-white">Bonanza Rewards</h2>
+                                    </div>
                                 </div>
-                                {currentTier ? (
-                                    <div className="bg-gradient-to-r from-fire-600 to-gold-500 rounded-xl p-3 mb-4 text-center transform hover:scale-[1.02] transition shadow-[0_0_30px_rgba(255,78,0,0.3)]">
-                                        <p className="text-[10px] font-bold uppercase tracking-wider text-white/80">🔥 UNLOCKED</p>
-                                        <h4 className="font-display text-xl md:text-2xl font-black text-white">{currentTier.prize}</h4>
-                                    </div>
-                                ) : (
-                                    <div className="bg-gray-800/50 rounded-xl p-3 mb-4 text-center border border-gray-700">
-                                        <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400">STATUS</p>
-                                        <h4 className="font-display text-lg font-bold text-white">No Reward Yet. Go!</h4>
-                                    </div>
-                                )}
+
+                                {/* Current Status Area */}
+                                <div className="mb-6 p-4 rounded-2xl bg-white/5 border border-white/10">
+                                    {currentTier ? (
+                                        <div className="text-center">
+                                            <span className="inline-block px-2 py-1 bg-green-500/20 text-green-400 text-[10px] font-bold uppercase rounded mb-2">Unlocked</span>
+                                            <h3 className="text-2xl font-bold text-white">{currentTier.prize}</h3>
+                                        </div>
+                                    ) : (
+                                        <div className="text-center">
+                                            <span className="text-[var(--text-muted)] text-sm font-medium">Keep pushing. No rewards unlocked yet.</span>
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* Next Target Area */}
                                 {nextTier && (
-                                    <div className="mb-4">
-                                        <h4 className="text-gray-400 font-bold uppercase text-xs mb-2">NEXT: <span className="text-white">{nextTier.name}</span></h4>
-                                        <div className="grid grid-cols-2 gap-2 mb-2">
-                                            <div className="bg-black/50 p-2 rounded-lg border border-gray-700">
-                                                <p className="text-[9px] text-gray-500 uppercase">Allotments</p>
-                                                <p className={`font-display font-bold text-lg ${allotments >= nextTier.allotments ? 'text-green-400' : 'text-white'}`}>{allotments}/{nextTier.allotments}</p>
+                                    <div className="mb-6">
+                                        <h4 className="text-[var(--text-muted)] text-xs font-semibold uppercase tracking-wider mb-3">Next Target</h4>
+                                        <div className="grid grid-cols-2 gap-4">
+                                            <div className="bg-black/30 rounded-xl p-3 border border-white/5">
+                                                <div className="text-[10px] text-[var(--text-muted)] uppercase mb-1">Allotments</div>
+                                                <div className="flex items-end justify-between">
+                                                    <span className={`text-xl font-semibold ${allotments >= nextTier.allotments ? 'text-green-400' : 'text-white'}`}>{allotments} <span className="text-sm text-gray-500">/ {nextTier.allotments}</span></span>
+                                                    {allotments >= nextTier.allotments && <i className="fa-solid fa-check-circle text-green-400"></i>}
+                                                </div>
                                             </div>
-                                            <div className="bg-black/50 p-2 rounded-lg border border-gray-700">
-                                                <p className="text-[9px] text-gray-500 uppercase">Revenue</p>
-                                                <p className={`font-display font-bold text-lg ${revenue >= nextTier.revReq ? 'text-green-400' : 'text-white'}`}>{revenue >= nextTier.revReq ? "✅" : nextTier.revText || "-"}</p>
+                                            <div className="bg-black/30 rounded-xl p-3 border border-white/5">
+                                                <div className="text-[10px] text-[var(--text-muted)] uppercase mb-1">Revenue</div>
+                                                <div className="flex items-end justify-between">
+                                                    <span className={`text-xl font-semibold ${revenue >= nextTier.revReq ? 'text-green-400' : 'text-white'}`}>{revenue >= nextTier.revReq ? "Ready" : nextTier.revText || "-"}</span>
+                                                    {revenue >= nextTier.revReq && <i className="fa-solid fa-check-circle text-green-400"></i>}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 )}
-                                <div className="space-y-2 max-h-[220px] overflow-y-auto pr-1">
+
+                                {/* Reward Tiers List */}
+                                <div className="space-y-3 overflow-y-auto pr-2 flex-1 min-h-[200px]">
                                     {BONANZA_TIERS.map((tier) => {
                                         const isUnlocked = currentTier && tier.id <= currentTier.id;
                                         const isNext = nextTier && tier.id === nextTier.id;
-                                        let bgClass = "bg-black/40 border-gray-800";
-                                        let textClass = "text-gray-400";
-                                        let icon = <i className="fa-solid fa-lock text-gray-600"></i>;
-                                        if (isUnlocked) { bgClass = "bg-green-900/20 border-green-500/30"; textClass = "text-green-400"; icon = <i className="fa-solid fa-check-circle text-green-400"></i>; } 
-                                        else if (isNext) { bgClass = "bg-fire-900/20 border-fire-500/50"; textClass = "text-white"; icon = <i className="fa-solid fa-crosshairs text-fire-500 animate-pulse-fast"></i>; }
+                                        
+                                        let styleClasses = "bg-white/5 border-transparent text-[var(--text-muted)] opacity-60";
+                                        let icon = <i className="fa-solid fa-lock text-xs"></i>;
+                                        
+                                        if (isUnlocked) { 
+                                            styleClasses = "bg-green-500/10 border-green-500/20 text-white opacity-100"; 
+                                            icon = <i className="fa-solid fa-check text-green-400 text-xs"></i>; 
+                                        } else if (isNext) { 
+                                            styleClasses = "bg-brand-500/10 border-brand-500/30 text-white opacity-100"; 
+                                            icon = <div className="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></div>; 
+                                        }
+
                                         return (
-                                            <div key={tier.id} className={`flex items-center justify-between p-2 rounded-lg border ${bgClass} transition-all`}>
-                                                <div className="flex items-center gap-3">
-                                                    <div className="w-5 text-center">{icon}</div>
-                                                    <div>
-                                                        <div className={`font-bold text-sm ${textClass}`}>{tier.prize}</div>
-                                                        <div className="text-[9px] text-gray-500">{tier.allotments} allot + {tier.revReq > 0 ? tier.revText : 'start'}</div>
-                                                    </div>
+                                            <div key={tier.id} className={`flex items-center gap-4 p-3 rounded-xl border ${styleClasses} transition-all duration-300`}>
+                                                <div className="w-6 flex justify-center">{icon}</div>
+                                                <div className="flex-1">
+                                                    <div className="font-medium text-sm">{tier.prize}</div>
+                                                </div>
+                                                <div className="text-right">
+                                                    <div className="text-[10px] font-medium">{tier.allotments} Allot.</div>
+                                                    <div className="text-[10px] opacity-70">{tier.revReq > 0 ? tier.revText : 'Base'}</div>
                                                 </div>
                                             </div>
                                         );
                                     })}
-                                    <p className="text-[8px] text-gray-500 mt-1 text-center">*25% paid to qualify</p>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    {/* PROJECTS */}
-                    <div className="max-w-7xl mx-auto mt-6">
-                        <div className="card-glass rounded-2xl p-3 sm:p-5">
-                            <h3 className="font-display text-xl font-bold mb-3 text-white uppercase border-b border-gray-800 pb-2 flex items-center gap-2">
-                                <i className="fa-solid fa-map-location-dot text-fire-500"></i> PROJECTS                            </h3>
-                            <div className="flex overflow-x-auto hide-scrollbar gap-1.5 mb-4 pb-1 -mx-1 px-1 sm:mx-0 sm:px-0">
+                    {}
+                    <div className="glass-panel p-6">
+                        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+                            <div className="flex items-center gap-2">
+                                <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
+                                    <i className="fa-solid fa-map text-blue-500 text-sm"></i>
+                                </div>
+                                <h2 className="text-xl font-semibold text-white">Project Catalog</h2>
+                            </div>
+                            
+                            {/* Filter Pills */}
+                            <div className="flex overflow-x-auto hide-scrollbar gap-2 pb-2 w-full md:w-auto -mx-2 px-2 md:mx-0 md:px-0">
                                 {FILTER_TABS.map(tab => (
-                                    <button key={tab.value} onClick={() => setActiveFilter(tab.value)} className={`px-3 py-1.5 rounded-full text-[9px] sm:text-xs font-bold uppercase transition-all whitespace-nowrap flex-shrink-0 ${activeFilter === tab.value ? 'bg-fire-600 text-white shadow-[0_0_15px_rgba(227,60,0,0.4)]' : 'bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white'}`}>
+                                    <button 
+                                        key={tab.value} 
+                                        onClick={() => setActiveFilter(tab.value)} 
+                                        className={`px-4 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors ${
+                                            activeFilter === tab.value 
+                                            ? 'bg-white text-black' 
+                                            : 'glass-button text-[var(--text-muted)]'
+                                        }`}
+                                    >
                                         {tab.label}
                                     </button>
                                 ))}
                             </div>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3">
-                                {filteredProjects.map(proj => (
-                                    <div key={proj.id} className="bg-black/60 border border-gray-800 rounded-xl p-3 hover:border-gray-500 transition relative overflow-hidden flex flex-col justify-between">
-                                        <div>
-                                            <div className="absolute top-0 right-0 bg-gray-800 text-[8px] font-bold px-2 py-0.5 rounded-bl-lg text-gray-300 uppercase">{proj.category}</div>
-                                            <h4 className="font-display font-bold text-sm sm:text-base text-white mb-0.5 pr-12 leading-tight">{proj.name}</h4>
-                                            <p className="text-gray-400 text-xs mb-2"><i className="fa-solid fa-location-dot text-red-500 mr-1"></i> {proj.location}</p>
-                                        </div>
-                                        <div className="flex flex-col sm:flex-row justify-between sm:items-end gap-2">
-                                            <div>
-                                                <div className="text-[8px] text-gray-500 uppercase">Starting</div>
-                                                <div className="font-bold text-gold-400 text-base leading-none">{proj.price}</div>
-                                            </div>
-                                            <div className="flex gap-1 flex-wrap">
-                                                {proj.tags.map((tag, i) => <span key={i} className="bg-gray-800 text-gray-300 text-[7px] sm:text-[8px] px-1.5 py-0.5 rounded whitespace-nowrap">{tag}</span>)}
-                                            </div>
+                        </div>
+
+                        {/* Projects Grid */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                            {filteredProjects.map(proj => (
+                                <div key={proj.id} className="bg-white/5 border border-white/10 rounded-2xl p-4 hover:bg-white/10 transition-colors group cursor-default">
+                                    <div className="flex justify-between items-start mb-2">
+                                        <span className="text-[10px] font-medium uppercase tracking-wider text-[var(--text-muted)]">{proj.category}</span>
+                                        <div className="flex gap-1">
+                                            {proj.tags.map((tag, i) => (
+                                                <span key={i} className="bg-black/50 text-gray-300 text-[9px] px-1.5 py-0.5 rounded">{tag}</span>
+                                            ))}
                                         </div>
                                     </div>
-                                ))}
-                            </div>
+                                    <h4 className="font-semibold text-white text-lg leading-tight mb-1 group-hover:text-brand-500 transition-colors">{proj.name}</h4>
+                                    <p className="text-[var(--text-muted)] text-xs mb-4 flex items-center gap-1">
+                                        <i className="fa-solid fa-location-dot"></i> {proj.location}
+                                    </p>
+                                    <div className="pt-3 border-t border-white/10 flex justify-between items-end">
+                                        <span className="text-xs text-[var(--text-muted)]">Starting at</span>
+                                        <span className="font-medium text-white">{proj.price}</span>
+                                    </div>
+                                </div>
+                            ))}
                         </div>
                     </div>
-
-                    <div className="text-center text-[8px] text-gray-500 mt-6 uppercase tracking-[0.2em] font-bold">
-                        <i className="fa-solid fa-fire text-fire-500 mr-1"></i> RISE UP · 90 DAYS · DOMINATE <i className="fa-solid fa-fire text-fire-500 ml-1"></i>
+                    
+                    <div className="text-center mt-12 pb-8 opacity-50">
+                        <i className="fa-brands fa-apple text-xl"></i>
                     </div>
                 </div>
             );
